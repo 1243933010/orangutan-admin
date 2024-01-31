@@ -3,21 +3,9 @@
         <div class="search">
             <div class="form">
 
-                <div class="form-item">
-                    <el-select v-model="formData.keyword_type" placeholder="资金流水号" style="width: 120px;">
-                        <el-option label="来源单号" value="from_no" />
-                        <el-option label="资金流水号" value="log_no" />
-                        <el-option label="资金账号" value="account" />
-                    </el-select>
-                </div>
-                <div class="form-item"><el-input v-model="formData.keyword" type="number" placeholder="请输入...." /></div>
-                <div class="form-item">
-                    <el-select v-model="formData.method" placeholder="状态" style="width: 120px;">
-                        <el-option label="充值" value="recharge" />
-                        <el-option label="订单冻结" value="order" />
-                        <el-option label="提现" value="withdraw" />
-                    </el-select>
-                </div>
+
+                <div class="form-item"><el-input v-model="formData.title" type="text" placeholder="请输入标题" /></div>
+
                 <div class="form-item">
                     <el-select v-model="formData.time_type" placeholder="创建时间" style="width: 120px;">
                         <el-option label="创建时间" :value="1" />
@@ -31,39 +19,23 @@
                 </div>
                 <div class="form-item submit" @click="getList(true)"><span>搜索</span></div>
                 <div class="form-item reset" @click="resertFormFnc"><span>重置</span></div>
-                <div class="form-item submit" @click="exportFnc"><span>导出</span></div>
+                <div class="form-item submit" @click="editFnc(false)"><span>新增</span></div>
 
             </div>
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="account" label="账号"></el-table-column>
-                <el-table-column prop="log_no" label="订单号"></el-table-column>
-                <el-table-column prop="identity" label="渠道">
+                <el-table-column prop="" label="" width="100"></el-table-column>
+                <el-table-column prop="notice_id" label="id" width="100"></el-table-column>
+                <el-table-column prop="title" label="标题"></el-table-column>
+                <el-table-column prop="created_at" label="创建时间">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.identity == 0">平台</span>
-                        <span v-if="scope.row.identity == 1">贸易商</span>
-                        <span v-if="scope.row.identity == 2">卡商</span>
+                        <span>{{ convertTimestampToDateString(scope.row.created_at || '') }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="method" label="状态">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.method == 'recharge'">充值</span>
-                        <span v-if="scope.row.method == 'order'">订单冻结</span>
-                        <span v-if="scope.row.method == 'withdraw'">提现</span>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="money" label="变动金额"></el-table-column>
-                <el-table-column prop="before_money" label="变动前金额"></el-table-column>
-                <el-table-column prop="remark" label="备注"></el-table-column>
-                <el-table-column prop="created_at" label="创建时间"></el-table-column>
-                <el-table-column prop="from_no" label="来源单号"></el-table-column>
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
-                        <el-button v-if="scope.row.examine_status == 0" @click="markFnc(scope.row)" type="text"
-                            size="small">标记失败</el-button>
-                        <el-button v-if="scope.row.examine_status !== 1" @click="supplementary(scope.row)" type="text"
-                            size="small">补单</el-button>
+                        <el-button @click="delFnc(scope.row)" type="text" size="small">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -75,26 +47,25 @@
             </el-pagination>
         </div>
 
-        <!-- <WithdrawalDialog ref="withdrawalRef" @handleExamine="getList(true)" /> -->
+        <Detail ref="detailRef" @handleExamine="getList(true)" />
     </div>
 </template>
 
 
 
 <script>
-import { notice_list} from '@/api/project'
-// import WithdrawalDialog from './components/WithdrawalDialog.vue'
+import { notice_list, notice_del } from '@/api/project'
+import { convertTimestampToDateString } from '@/utils/time'
+import Detail from './Detail.vue'
 export default {
-    // components: { WithdrawalDialog },
+    components: { Detail },
     data() {
         return {
             formData: {
                 page: 1,
                 limit: 10,
                 total: 0,
-                keyword_type: 'from_no',
-                keyword: '',
-                method: '',
+                title: '',
                 time_start: '',
                 time_end: '',
                 time_type: 1,
@@ -111,56 +82,31 @@ export default {
         }
     },
     mounted() {
-        // this.getWithdrawOptions()
         this.getList(true);
-
+        this.convertTimestampToDateString = convertTimestampToDateString;
     },
     methods: {
-        async exportFnc() {
-            // let res = await fund_export({});
-            // if (res.code == 200) {
-            //     this.$message.success(res.msg)
-            //     window.open(res.url)
-            //     return
-            // }
-            // this.$message.error(res.msg)
-            window.open(`${process.env.VUE_APP_EXPORT_URL}/admin/fund/export`)
+        editFnc(row, type) {
+            this.$refs.detailRef.openDialog(row, type)
         },
         resertFormFnc() {
             this.formData = {
                 page: 1,
                 limit: 10,
                 total: 0,
-                keyword_type: 'recharge_no',
-                keyword: '',
-                status: -1,
+                title: '',
                 time_start: '',
                 time_end: '',
                 time_type: 1,
                 time: ''
             }
         },
-        markFnc(row) {
-            this.$confirm('是否标记失败该数据', '提示', {
+        delFnc(row) {
+            this.$confirm('是否删除该数据', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消'
             }).then(async () => {
-                let res = await recharge_checkFail({ recharge_id: row.recharge_id })
-                if (res.code == 200) {
-                    this.$message.success(res.msg)
-                    this.getList(true)
-                    return
-                }
-                this.$message.error(res.msg)
-                this.getList(true)
-            })
-        },
-        supplementary(row) {
-            this.$confirm('是否补单改数据', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消'
-            }).then(async () => {
-                let res = await recharge_reGet({ recharge_id: row.recharge_id })
+                let res = await notice_del(row.notice_id, {})
                 if (res.code == 200) {
                     this.$message.success(res.msg)
                     this.getList(true)

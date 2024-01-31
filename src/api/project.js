@@ -1,5 +1,15 @@
 import request from '@/utils/request'
 
+
+// 菜单路由列表
+export function route_list(id) {
+  return request({
+    url: `/admin/admins/get_menus${id}`,
+    method: 'get',
+  })
+}
+
+
 // 上传
 export function uploadImg(data) {
   return request({
@@ -8,6 +18,8 @@ export function uploadImg(data) {
     data
   })
 }
+
+
 
 // 权限列表
 export function permissions_list(params) {
@@ -204,6 +216,34 @@ export function admins_edit(id, data) {
   })
 }
 
+// 获取管理员角色
+export function admins_roles_list(id) {
+  return request({
+    url: `/admin/admins/get_roles/${id}`,
+    method: 'get'
+  })
+}
+
+// 管理员添加角色
+export function admins_roles_edit(data) {
+  return request({
+    url: `/admin/roles_admins/insert`,
+    method: 'post',
+    data
+  })
+}
+
+
+
+// 移除管理员角色
+export function admins_roles_del(id) {
+  return request({
+    url: `/admin/roles_admins/del/${id}`,
+    method: 'post'
+  })
+}
+
+
 // ------
 
 // 提现订单-列表
@@ -284,5 +324,24 @@ export function notice_list(params) {
     url: '/admin/notice/list',
     method: 'get',
     params
+  })
+}
+
+
+// 公告-添加
+export function notice_add(data) {
+  return request({
+    url: '/admin/notice/add',
+    method: 'post',
+    data
+  })
+}
+
+// 公告-删除
+export function notice_del(id, data) {
+  return request({
+    url: `/admin/notice/del/${id}`,
+    method: 'post',
+    data
   })
 }

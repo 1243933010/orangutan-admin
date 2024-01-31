@@ -20,11 +20,13 @@
         <el-table-column prop="avatar" label="头像" />
         <el-table-column prop="password" label="密码" />
         <el-table-column prop="description" label="备注" />
-        <el-table-column fixed="right" label="操作" width="100">
+        <el-table-column fixed="right" label="操作" width="400">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="editFnc(scope.row)">编辑</el-button>
             <el-button type="text" size="small" @click="editFnc(scope.row,'see')">详情</el-button>
             <el-button type="text" size="small" @click="delFnc(scope.row)">删除</el-button>
+            <el-button type="text" size="small" @click="handleRole(scope.row)">配置角色</el-button>
+
           </template>
         </el-table-column>
       </el-table>
@@ -42,14 +44,17 @@
     </div>
 
     <AdminDetail ref="adminRef" @handleEmit="getList(true)" />
+    <AdminRoles ref="adminRolesRef" />
   </div>
 </template>
 
 <script>
 import { admins_list, admins_del } from '@/api/project'
 import AdminDetail from './components/AdminDetail.vue'
+import AdminRoles from './components/AdminRoles.vue'
+
 export default {
-  components: { AdminDetail },
+  components: { AdminDetail,AdminRoles },
   data() {
     return {
       formData: {
@@ -68,11 +73,14 @@ export default {
     this.getList(true)
   },
   methods: {
+    handleRole(row){
+      this.$refs.adminRolesRef.openDialog(row)
+    },
     delFnc(row) {
       this.$confirm('是否删除该管理员', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消' }).then(async() => {
-        const res = await admins_del(row.permission_id)
+        const res = await admins_del(row.admin_id)
         if (res.code == 200) {
           this.$message.success(res.msg)
           this.getList(true)
