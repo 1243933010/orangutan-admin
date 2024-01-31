@@ -45,6 +45,78 @@ export function permissions_del(id) {
 }
 
 
+//角色列表
+export function roles_list(params) {
+  return request({
+    url: '/admin/roles/list',
+    method: 'get',
+    params
+  })
+}
+
+//删除角色
+export function roles_del(id) {
+  return request({
+    url: `/admin/roles/del/${id}`,
+    method: 'post'
+  })
+}
+
+//角色修改
+export function roles_edit(id,data) {
+  return request({
+    url: `/admin/roles/update/${id}`,
+    method: 'post',
+    data
+  })
+}
+
+//角色信息详情
+export function roles_detail(id) {
+  return request({
+    url: `/admin/roles/get/${id}`,
+    method: 'get'
+  })
+}
+
+//角色新增
+export function roles_add(data) {
+  return request({
+    url: `/admin/roles/add`,
+    method: 'post',
+    data
+  })
+}
+
+
+//角色拥有的权限列表
+export function get_permissions(id) {
+  return request({
+    url: `/admin/roles/get_permissions/${id}`,
+    method: 'get'
+  })
+}
+
+//角色添加权限
+export function roles_permissions_add(data) {
+  return request({
+    url: `/admin/roles_permissions/insert`,
+    method: 'post',
+    data
+  })
+}
+
+//角色添加权限
+export function roles_permissions_del(id) {
+  return request({
+    url: `/admin/roles_permissions/del/${id}`,
+    method: 'post',
+  })
+}
+
+
+//------
+
 //提现订单-列表
 export function withdraw_list(params) {
   return request({
