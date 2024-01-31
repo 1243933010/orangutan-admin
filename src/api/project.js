@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-//上传
+// 上传
 export function uploadImg(data) {
   return request({
     url: '/api/public/file_upload',
@@ -9,8 +9,7 @@ export function uploadImg(data) {
   })
 }
 
-
-//权限列表
+// 权限列表
 export function permissions_list(params) {
   return request({
     url: '/admin/permissions/list',
@@ -19,8 +18,7 @@ export function permissions_list(params) {
   })
 }
 
-
-//权限信息详情
+// 权限信息详情
 export function permissions_detail(id) {
   return request({
     url: `/admin/permissions/get/${id}`,
@@ -28,8 +26,8 @@ export function permissions_detail(id) {
   })
 }
 
-//权限修改
-export function permissions_edit(id,data) {
+// 权限修改
+export function permissions_edit(id, data) {
   return request({
     url: `/admin/permissions/update/${id}`,
     method: 'post',
@@ -37,7 +35,7 @@ export function permissions_edit(id,data) {
   })
 }
 
-//权限新增
+// 权限新增
 export function permissions_add(data) {
   return request({
     url: `/admin/permissions/add`,
@@ -46,7 +44,7 @@ export function permissions_add(data) {
   })
 }
 
-//删除权限
+// 删除权限
 export function permissions_del(id) {
   return request({
     url: `/admin/permissions/del/${id}`,
@@ -54,8 +52,7 @@ export function permissions_del(id) {
   })
 }
 
-
-//角色列表
+// 角色列表
 export function roles_list(params) {
   return request({
     url: '/admin/roles/list',
@@ -64,7 +61,7 @@ export function roles_list(params) {
   })
 }
 
-//删除角色
+// 删除角色
 export function roles_del(id) {
   return request({
     url: `/admin/roles/del/${id}`,
@@ -72,8 +69,8 @@ export function roles_del(id) {
   })
 }
 
-//角色修改
-export function roles_edit(id,data) {
+// 角色修改
+export function roles_edit(id, data) {
   return request({
     url: `/admin/roles/update/${id}`,
     method: 'post',
@@ -81,7 +78,7 @@ export function roles_edit(id,data) {
   })
 }
 
-//角色信息详情
+// 角色信息详情
 export function roles_detail(id) {
   return request({
     url: `/admin/roles/get/${id}`,
@@ -89,7 +86,7 @@ export function roles_detail(id) {
   })
 }
 
-//角色新增
+// 角色新增
 export function roles_add(data) {
   return request({
     url: `/admin/roles/add`,
@@ -98,8 +95,7 @@ export function roles_add(data) {
   })
 }
 
-
-//角色拥有的权限列表
+// 角色拥有的权限列表
 export function get_permissions(id) {
   return request({
     url: `/admin/roles/get_permissions/${id}`,
@@ -107,7 +103,7 @@ export function get_permissions(id) {
   })
 }
 
-//角色添加权限
+// 角色添加权限
 export function roles_permissions_add(data) {
   return request({
     url: `/admin/roles_permissions/insert`,
@@ -116,16 +112,15 @@ export function roles_permissions_add(data) {
   })
 }
 
-//角色添加权限
+// 角色添加权限
 export function roles_permissions_del(id) {
   return request({
     url: `/admin/roles_permissions/del/${id}`,
-    method: 'post',
+    method: 'post'
   })
 }
 
-
-//菜单列表
+// 菜单列表
 export function menus_list() {
   return request({
     url: `/admin/menus/list`,
@@ -133,7 +128,7 @@ export function menus_list() {
   })
 }
 
-//菜单详情
+// 菜单详情
 export function menus_detail(id) {
   return request({
     url: `/admin/menus/get/${id}`,
@@ -141,7 +136,7 @@ export function menus_detail(id) {
   })
 }
 
-//菜单添加
+// 菜单添加
 export function menus_add(data) {
   return request({
     url: `/admin/menus/add`,
@@ -150,7 +145,7 @@ export function menus_add(data) {
   })
 }
 
-//删除菜单
+// 删除菜单
 export function menus_del(id) {
   return request({
     url: `/admin/menus/del/${id}`,
@@ -158,9 +153,8 @@ export function menus_del(id) {
   })
 }
 
-
-//菜单修改
-export function menus_edit(id,data) {
+// 菜单修改
+export function menus_edit(id, data) {
   return request({
     url: `/admin/menus/update/${id}`,
     method: 'post',
@@ -168,7 +162,7 @@ export function menus_edit(id,data) {
   })
 }
 
-//管理员列表
+// 管理员列表
 export function admins_list() {
   return request({
     url: `/admin/admins/list`,
@@ -176,7 +170,7 @@ export function admins_list() {
   })
 }
 
-//管理员详情
+// 管理员详情
 export function admins_detail(id) {
   return request({
     url: `/admin/admins/get/${id}`,
@@ -184,8 +178,7 @@ export function admins_detail(id) {
   })
 }
 
-
-//管理员添加
+// 管理员添加
 export function admins_add(data) {
   return request({
     url: `/admin/admins/add`,
@@ -194,8 +187,7 @@ export function admins_add(data) {
   })
 }
 
-
-//删除管理员
+// 删除管理员
 export function admins_del(id) {
   return request({
     url: `/admin/admins/del/${id}`,
@@ -203,9 +195,8 @@ export function admins_del(id) {
   })
 }
 
-
-//管理员修改
-export function admins_edit(id,data) {
+// 管理员修改
+export function admins_edit(id, data) {
   return request({
     url: `/admin/admins/update/${id}`,
     method: 'post',
@@ -213,10 +204,9 @@ export function admins_edit(id,data) {
   })
 }
 
+// ------
 
-//------
-
-//提现订单-列表
+// 提现订单-列表
 export function withdraw_list(params) {
   return request({
     url: '/admin/withdraw/list',
@@ -225,17 +215,16 @@ export function withdraw_list(params) {
   })
 }
 
-
-//提现订单-列表的状态可选项
+// 提现订单-列表的状态可选项
 export function withdraw_options(params) {
-    return request({
-      url: '/admin/withdraw/options',
-      method: 'get',
-      params
-    })
-  }
-  
-//提现订单-审核
+  return request({
+    url: '/admin/withdraw/options',
+    method: 'get',
+    params
+  })
+}
+
+// 提现订单-审核
 export function withdraw_examine(data) {
   return request({
     url: '/admin/withdraw/examine',
@@ -244,9 +233,7 @@ export function withdraw_examine(data) {
   })
 }
 
-
-
-//充值订单-列表
+// 充值订单-列表
 export function recharge_list(params) {
   return request({
     url: '/admin/recharge/list',
@@ -255,8 +242,7 @@ export function recharge_list(params) {
   })
 }
 
-
-//充值订单-标记失败
+// 充值订单-标记失败
 export function recharge_checkFail(data) {
   return request({
     url: '/admin/recharge/checkFail',
@@ -265,8 +251,7 @@ export function recharge_checkFail(data) {
   })
 }
 
-
-//充值订单-补单
+// 充值订单-补单
 export function recharge_reGet(data) {
   return request({
     url: '/admin/recharge/reGet',
@@ -275,9 +260,7 @@ export function recharge_reGet(data) {
   })
 }
 
-
-
-//资金明细列表
+// 资金明细列表
 export function fund_list(params) {
   return request({
     url: '/admin/fund/list',
@@ -286,7 +269,7 @@ export function fund_list(params) {
   })
 }
 
-//资金明细导出
+// 资金明细导出
 export function fund_export(params) {
   return request({
     url: '/admin/fund/export',
@@ -295,8 +278,7 @@ export function fund_export(params) {
   })
 }
 
-
-//公告列表
+// 公告列表
 export function notice_list(params) {
   return request({
     url: '/admin/notice/list',

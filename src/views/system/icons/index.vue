@@ -5,7 +5,7 @@
       </a>
     </aside>
     <el-tabs type="border-card">
-     
+
       <el-tab-pane label="Element-UI Icons">
         <div class="grid">
           <div v-for="item of elementIcons" :key="item" @click="handleClipboard(generateElementIconCode(item),$event)">

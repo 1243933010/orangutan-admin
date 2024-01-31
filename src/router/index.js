@@ -82,7 +82,7 @@ export const constantRoutes = [
         meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
       }
     ]
-  },
+  }
   // {
   //   path: '/documentation',
   //   component: Layout,
@@ -128,8 +128,8 @@ export const constantRoutes = [
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes =[
-    {
+export const asyncRoutes = [
+  {
     path: '/user',
     component: Layout,
     redirect: '/user/index',
@@ -149,7 +149,7 @@ export const asyncRoutes =[
           title: '用户管理',
           roles: ['admin'] // or you can only set roles in sub nav
         }
-      },
+      }
     ]
   },
   {
@@ -172,7 +172,7 @@ export const asyncRoutes =[
           title: '收款订单',
           roles: ['admin'] // or you can only set roles in sub nav
         }
-      },
+      }
     ]
   },
   {
@@ -196,7 +196,7 @@ export const asyncRoutes =[
           roles: ['admin'] // or you can only set roles in sub nav
         }
       },
-      
+
       {
         path: 'deduction',
         component: () => import('@/views/fund/deduction'),
@@ -223,8 +223,8 @@ export const asyncRoutes =[
           title: '资金明细',
           roles: ['admin'] // or you can only set roles in sub nav
         }
-      },
-      
+      }
+
     ]
   },
   {
@@ -247,7 +247,7 @@ export const asyncRoutes =[
           title: '公告管理',
           roles: ['admin'] // or you can only set roles in sub nav
         }
-      },
+      }
     ]
   },
   {
@@ -324,10 +324,10 @@ export const asyncRoutes =[
           title: 'icon',
           roles: ['admin'] // or you can only set roles in sub nav
         }
-      },
+      }
 
     ]
-  },
+  }
 ]
 // export const asyncRoutes = [
 //   {
