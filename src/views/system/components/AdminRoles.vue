@@ -7,7 +7,7 @@
                     <div class="item">
                         <div v-for="(item, index) in adminsRolesList" :key="index">
                             <span>{{ item.name }}</span>
-                            <el-button @click="rolesDel(item)">删除</el-button>
+                            <el-button @click="rolesDel(item)">移除</el-button>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@ export default {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消'
             }).then(async () => {
-                let res = await admins_roles_del(item.role_id)
+                let res = await admins_roles_del(item.pivot.role_admin_id)
                 if (res.code == 200) {
                     this.$message.success(res.msg)
                     await this.getAdminsRolesList()

@@ -1,5 +1,5 @@
 import { asyncRoutes, constantRoutes } from '@/router'
-
+import {route_list} from '@/api/project'
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
@@ -48,8 +48,9 @@ const mutations = {
 
 const actions = {
   generateRoutes({ commit }, roles) {
-    return new Promise(resolve => {
-      let accessedRoutes
+    return new Promise(async resolve => {
+      let res = await route_list(1007)
+      let accessedRoutes;
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || []
       } else {

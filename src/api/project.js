@@ -4,7 +4,7 @@ import request from '@/utils/request'
 // 菜单路由列表
 export function route_list(id) {
   return request({
-    url: `/admin/admins/get_menus${id}`,
+    url: `/admin/admins/get_menus/${id}`,
     method: 'get',
   })
 }

@@ -147,7 +147,7 @@ export const asyncRoutes = [
         name: 'userIndex',
         meta: {
           title: '用户管理',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       }
     ]
@@ -161,7 +161,7 @@ export const asyncRoutes = [
     meta: {
       title: '订单管理',
       icon: 'lock',
-      roles: ['admin'] // you can set roles in root nav
+       // you can set roles in root nav
     },
     children: [
       {
@@ -170,7 +170,7 @@ export const asyncRoutes = [
         name: 'collection',
         meta: {
           title: '收款订单',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       }
     ]
@@ -184,7 +184,7 @@ export const asyncRoutes = [
     meta: {
       title: '资金管理',
       icon: 'lock',
-      roles: ['admin'] // you can set roles in root nav
+       // you can set roles in root nav
     },
     children: [
       {
@@ -193,7 +193,7 @@ export const asyncRoutes = [
         name: 'recharge',
         meta: {
           title: '充值订单',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       },
 
@@ -203,7 +203,7 @@ export const asyncRoutes = [
         name: 'deduction',
         meta: {
           title: '扣款订单',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       },
       {
@@ -212,7 +212,7 @@ export const asyncRoutes = [
         name: 'withdrawal',
         meta: {
           title: '提现订单',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       },
       {
@@ -221,7 +221,7 @@ export const asyncRoutes = [
         name: 'detail',
         meta: {
           title: '资金明细',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       }
 
@@ -236,7 +236,7 @@ export const asyncRoutes = [
     meta: {
       title: '公告管理',
       icon: 'lock',
-      roles: ['admin'] // you can set roles in root nav
+       // you can set roles in root nav
     },
     children: [
       {
@@ -245,7 +245,7 @@ export const asyncRoutes = [
         name: 'notice',
         meta: {
           title: '公告管理',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       }
     ]
@@ -259,7 +259,6 @@ export const asyncRoutes = [
     meta: {
       title: '系统管理',
       icon: 'lock',
-      roles: ['admin'] // you can set roles in root nav
     },
     children: [
       {
@@ -268,7 +267,6 @@ export const asyncRoutes = [
         name: 'account',
         meta: {
           title: '账号管理',
-          roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
@@ -277,7 +275,6 @@ export const asyncRoutes = [
         name: 'dictionary',
         meta: {
           title: '数据字典',
-          roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
@@ -286,7 +283,6 @@ export const asyncRoutes = [
         name: 'authority',
         meta: {
           title: '权限管理',
-          roles: ['admin'] // or you can only set roles in sub nav
         }
       },
       {
@@ -295,7 +291,7 @@ export const asyncRoutes = [
         name: 'role',
         meta: {
           title: '角色管理',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       },
       {
@@ -304,16 +300,16 @@ export const asyncRoutes = [
         name: 'admin',
         meta: {
           title: '管理员管理',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       },
       {
-        path: 'menu',
+        path: 'menus',
         component: () => import('@/views/system/menu'),
-        name: 'menu',
+        name: 'menus',
         meta: {
           title: '菜单管理',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       },
       {
@@ -322,7 +318,7 @@ export const asyncRoutes = [
         name: 'icon',
         meta: {
           title: 'icon',
-          roles: ['admin'] // or you can only set roles in sub nav
+           // or you can only set roles in sub nav
         }
       }
 
@@ -348,7 +344,7 @@ export const asyncRoutes = [
 //         name: 'PagePermission',
 //         meta: {
 //           title: 'Page Permission',
-//           roles: ['admin'] // or you can only set roles in sub nav
+//            // or you can only set roles in sub nav
 //         }
 //       },
 //       {
@@ -366,7 +362,7 @@ export const asyncRoutes = [
 //         name: 'RolePermission',
 //         meta: {
 //           title: 'Role Permission',
-//           roles: ['admin']
+//           
 //         }
 //       }
 //     ]
