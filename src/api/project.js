@@ -1,5 +1,15 @@
 import request from '@/utils/request'
 
+//上传
+export function uploadImg(data) {
+  return request({
+    url: '/api/public/file_upload',
+    method: 'post',
+    data
+  })
+}
+
+
 //权限列表
 export function permissions_list(params) {
   return request({
@@ -111,6 +121,95 @@ export function roles_permissions_del(id) {
   return request({
     url: `/admin/roles_permissions/del/${id}`,
     method: 'post',
+  })
+}
+
+
+//菜单列表
+export function menus_list() {
+  return request({
+    url: `/admin/menus/list`,
+    method: 'get'
+  })
+}
+
+//菜单详情
+export function menus_detail(id) {
+  return request({
+    url: `/admin/menus/get/${id}`,
+    method: 'get'
+  })
+}
+
+//菜单添加
+export function menus_add(data) {
+  return request({
+    url: `/admin/menus/add`,
+    method: 'post',
+    data
+  })
+}
+
+//删除菜单
+export function menus_del(id) {
+  return request({
+    url: `/admin/menus/del/${id}`,
+    method: 'post'
+  })
+}
+
+
+//菜单修改
+export function menus_edit(id,data) {
+  return request({
+    url: `/admin/menus/update/${id}`,
+    method: 'post',
+    data
+  })
+}
+
+//管理员列表
+export function admins_list() {
+  return request({
+    url: `/admin/admins/list`,
+    method: 'get'
+  })
+}
+
+//管理员详情
+export function admins_detail(id) {
+  return request({
+    url: `/admin/admins/get/${id}`,
+    method: 'get'
+  })
+}
+
+
+//管理员添加
+export function admins_add(data) {
+  return request({
+    url: `/admin/admins/add`,
+    method: 'post',
+    data
+  })
+}
+
+
+//删除管理员
+export function admins_del(id) {
+  return request({
+    url: `/admin/admins/del/${id}`,
+    method: 'post'
+  })
+}
+
+
+//管理员修改
+export function admins_edit(id,data) {
+  return request({
+    url: `/admin/admins/update/${id}`,
+    method: 'post',
+    data
   })
 }
 

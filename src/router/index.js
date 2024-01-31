@@ -316,6 +316,16 @@ export const asyncRoutes =[
           roles: ['admin'] // or you can only set roles in sub nav
         }
       },
+      {
+        path: 'icon',
+        component: () => import('@/views/system/icons/index'),
+        name: 'icon',
+        meta: {
+          title: 'icon',
+          roles: ['admin'] // or you can only set roles in sub nav
+        }
+      },
+
     ]
   },
 ]
