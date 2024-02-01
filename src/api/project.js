@@ -345,3 +345,77 @@ export function notice_del(id, data) {
     data
   })
 }
+
+
+// 用户列表
+export function member_list(data) {
+  return request({
+    url: '/admin/member/list',
+    method: 'post',
+    data
+  })
+}
+
+
+// 用户详情
+export function member_detail(data) {
+  return request({
+    url: `/admin/member/get_member`,
+    method: 'post',
+    data
+  })
+}
+
+
+
+// 用户编辑
+export function member_edit(data) {
+  return request({
+    url: `/admin/member/edit_member`,
+    method: 'post',
+    data
+  })
+}
+
+
+
+// 收款钱包信息列表
+export function payment_list(data) {
+  return request({
+    url: '/admin/payment/list',
+    method: 'post',
+    data
+  })
+}
+
+
+// 收款钱包信息
+export function payment_detail(data) {
+  return request({
+    url: '/admin/payment/wallet_select',
+    method: 'post',
+    data
+  })
+}
+
+
+// 钱包添加
+export function payment_add(data) {
+  return request({
+    url: '/admin/payment/wallet_store',
+    method: 'post',
+    data
+  })
+}
+
+
+
+// 钱包编辑
+
+export function payment_edit(data) {
+  return request({
+    url: '/admin/payment/wallet_edit',
+    method: 'post',
+    data
+  })
+}

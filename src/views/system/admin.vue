@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="table">
-      <el-table :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100%" stripe>
         <el-table-column prop="" label="" width="10"></el-table-column>
         <el-table-column type="selection" width="100"></el-table-column>
         <el-table-column prop="admin_id" label="id" />

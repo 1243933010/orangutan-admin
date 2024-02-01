@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="table">
-            <el-table :data="tableData" style="width: 100%">
+            <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="account" label="账号"></el-table-column>
@@ -60,14 +60,14 @@
                 <el-table-column prop="remark" label="备注"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间"></el-table-column>
                 <el-table-column prop="from_no" label="来源单号"></el-table-column>
-                <el-table-column fixed="right" label="操作" width="100">
+                <!-- <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.examine_status == 0" @click="markFnc(scope.row)" type="text"
                             size="small">标记失败</el-button>
                         <el-button v-if="scope.row.examine_status !== 1" @click="supplementary(scope.row)" type="text"
                             size="small">补单</el-button>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
             </el-table>
         </div>
         <div style="display: flex;flex-direction: row-reverse;">

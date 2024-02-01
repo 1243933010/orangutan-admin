@@ -4,24 +4,24 @@
             <div class="form">
 
                 <div class="form-item">
-                    <el-select v-model="formData.type" placeholder="手机号" style="width: 120px;">
-                        <el-option label="手机号" :value="1" />
-                        <el-option label="账号名称" :value="2" />
-                        <el-option label="邮箱" :value="3" />
-                        <el-option label="姓名" :value="4" />
-                        <el-option label="身份证号" :value="5" />
+                    <el-select v-model="formData.keyword_type" placeholder="手机号" style="width: 120px;">
+                        <el-option label="手机号" value="recharge_no" />
+                        <el-option label="账号名称" value="transfer_hash" />
+                        <el-option label="邮箱" value="transfer_hash" />
+                        <el-option label="姓名" value="transfer_hash" />
+                        <el-option label="身份证号" value="transfer_hash" />
                     </el-select>
                 </div>
-                <div class="form-item"><el-input v-model="formData.search_name" type="number" placeholder="请输入...." /></div>
+                <div class="form-item"><el-input v-model="formData.keyword" type="number" placeholder="请输入...." /></div>
                 <div class="form-item">
-                    <el-select v-model="formData.is_auth" placeholder="认证状态" style="width: 120px;">
-                        <el-option label="全部" value="" />
-                        <el-option label="已认证" :value="1" />
-                        <el-option label="未认证" :value="0" />
+                    <el-select v-model="formData.status" placeholder="认证状态" style="width: 120px;">
+                        <el-option label="全部" :value="-1" />
+                        <el-option label="已认证" :value="0" />
+                        <el-option label="未认证" :value="1" />
                     </el-select>
                 </div>
                 <div class="form-item">
-                    <el-select v-model="formData.date_type" placeholder="注册时间" style="width: 120px;">
+                    <el-select v-model="formData.time_type" placeholder="注册时间" style="width: 120px;">
                         <el-option label="注册时间" :value="1" />
                         <el-option label="最近登陆时间" :value="2" />
                     </el-select>
@@ -68,7 +68,7 @@
 </template>
   
 <script>
-import { member_list, admins_del } from '@/api/project'
+import { payment_list, admins_del } from '@/api/project'
 import Detail from './components/Detail.vue'
 
 export default {
@@ -79,13 +79,6 @@ export default {
                 page: 1,
                 limit: 10,
                 total: 0,
-                type:1,
-                search_name:'',
-                is_auth:'',
-                date_type:1,
-                time:'',
-                start_time:'',
-                end_time:''
             },
             tableData: []
 
@@ -122,15 +115,7 @@ export default {
                 page: 1,
                 limit: 10,
                 total: 0,
-                type:1,
-                search_name:'',
-                is_auth:'',
-                date_type:1,
-                time:'',
-                start_time:'',
-                end_time:''
             }
-            this.getList()
         },
         handleSizeChange(val) {
             this.formData.limit = val
@@ -144,11 +129,7 @@ export default {
             if (bool) {
                 this.formData.page = 1
             }
-            if (this.formData.time.length > 0) {
-                this.formData.start_time = this.formData.time[0];
-                this.formData.end_time = this.formData.time[1];
-            }
-            const res = await member_list(this.formData)
+            const res = await payment_list(this.formData)
             if (res.code == 200) {
                 this.formData.total = res.data.total
                 this.tableData = res.data.data

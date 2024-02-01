@@ -35,36 +35,31 @@
       </div>
     </div>
     <div class="table">
-      <el-table :data="tableData" style="width: 100%" row-key="menu_id"  border default-expand-all
-    :tree-props="{children: 'child', hasChildren: 'hasChildren'}">
-        <el-table-column prop="" label="" width="70"></el-table-column>
-        <!-- <el-table-column type="selection" width="100"></el-table-column> -->
-        <el-table-column prop="menu_id" label="菜单id" />
+      <el-table :data="tableData" row-key="menu_id" default-expand-all 
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
+       
         <el-table-column prop="name" label="菜单名称" />
+        <el-table-column prop="menu_id" label="菜单id" />
         <el-table-column prop="icon" label="图标" />
         <el-table-column prop="path" label="路径" />
         <el-table-column prop="status" label="状态" />
         <el-table-column prop="additional" label="附加字段" />
-
         <el-table-column fixed="right" label="操作" width="300">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="editFnc(scope.row)">编辑</el-button>
-            <el-button type="text" size="small" @click="editFnc(scope.row,'see')">详情</el-button>
+            <el-button type="text" size="small" @click="editFnc(scope.row, 'see')">详情</el-button>
             <el-button type="text" size="small" @click="delFnc(scope.row)">删除</el-button>
           </template>
         </el-table-column>
+       
       </el-table>
+
+
     </div>
     <div style="display: flex;flex-direction: row-reverse;">
-      <el-pagination
-        :current-page="formData.page"
-        :page-sizes="[10, 20, 30, 40]"
-        :page-size="formData.limit"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="formData.total"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      <el-pagination :current-page="formData.page" :page-sizes="[10, 20, 30, 40]" :page-size="formData.limit"
+        layout="total, sizes, prev, pager, next, jumper" :total="formData.total" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange" />
     </div>
 
     <MenuDetail ref="menuRef" @handleEmit="getList(true)" />
@@ -72,7 +67,7 @@
 </template>
 
 <script>
-import { menus_list, menus_del,route_list } from '@/api/project'
+import { menus_list, menus_del, route_list } from '@/api/project'
 import MenuDetail from './components/MenuDetail.vue'
 export default {
   components: { MenuDetail },
@@ -89,7 +84,8 @@ export default {
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ]
       },
-      tableData: []
+      tableData: [],
+     
 
     }
   },
@@ -101,7 +97,8 @@ export default {
     delFnc(row) {
       this.$confirm('是否删除该菜单', '提示', {
         confirmButtonText: '确定',
-        cancelButtonText: '取消' }).then(async() => {
+        cancelButtonText: '取消'
+      }).then(async () => {
         const res = await menus_del(row.permission_id)
         if (res.code == 200) {
           this.$message.success(res.msg)
@@ -137,7 +134,11 @@ export default {
       const res = await route_list(1007)
       if (res.code == 200) {
         this.formData.total = res.data.total
-        this.tableData = res.data
+        res.data.forEach(val => {
+          val.children = val.child;
+        })
+       
+        this.tableData=res.data
       }
     }
   }
@@ -145,41 +146,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .form-item {
+    margin-right: 7px;
+  }
+
+  .submit {
+    cursor: pointer;
+    width: 94px;
+    height: 38px;
+    background: linear-gradient(90deg, #5B80EE 0%, #3E63F4 100%);
+    border-radius: 6px;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
+    color: white;
+    font-size: 14px;
+  }
 
-    .form-item {
-        margin-right: 7px;
-    }
-
-    .submit {
-        cursor: pointer;
-        width: 94px;
-        height: 38px;
-        background: linear-gradient(90deg, #5B80EE 0%, #3E63F4 100%);
-        border-radius: 6px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 14px;
-    }
-
-    .reset {
-        cursor: pointer;
-        width: 94px;
-        height: 38px;
-        background: #FFFFFF;
-        border: 1px solid #F1F1F1;
-        border-radius: 6px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #333333;
-        font-size: 14px;
-    }
+  .reset {
+    cursor: pointer;
+    width: 94px;
+    height: 38px;
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333333;
+    font-size: 14px;
+  }
 }
 </style>

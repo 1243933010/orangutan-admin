@@ -12,17 +12,6 @@ import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 
-import Role from '@/views/system/role'
-import Menus from '@/views/system/menu'
-import Authority from '@/views/system/authority'
-
-
-// export const routeProject = {
-//   'system/role':Role,
-//   'system/menu':Menus,
-//   'system/authority':Authority,
-// }
-
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -156,9 +145,18 @@ export const asyncRoutes = [
       {
         path: 'index',
         component: () => import('@/views/user/index'),
-        name: 'userIndex',
+        name: 'index',
         meta: {
           title: '用户管理',
+           // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'wallet',
+        component: () => import('@/views/user/wallet'),
+        name: 'wallet',
+        meta: {
+          title: '钱包管理',
            // or you can only set roles in sub nav
         }
       }

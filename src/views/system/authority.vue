@@ -35,19 +35,22 @@
             </div>
         </div>
         <div class="table">
-            <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="" label="" width="10"></el-table-column>
-                <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="permission_id" label="权限id"></el-table-column>
+            <el-table :data="tableData" style="width: 100%" stripe row-key="permission_id" default-expand-all
+                :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
+                <!-- <el-table-column prop="" label="" width="10"></el-table-column> -->
+                <!-- <el-table-column type="selection" width="100"></el-table-column> -->
                 <el-table-column prop="display_name" label="权限名称"></el-table-column>
+                <el-table-column prop="permission_id" label="权限id"></el-table-column>
+                <el-table-column prop="parent_id" label="父级id"></el-table-column>
+               
                 <el-table-column prop="effect_uri" label="url"></el-table-column>
                 <el-table-column prop="name" label="权限字段"></el-table-column>
                 <el-table-column prop="description" label="备注"></el-table-column>
                 <el-table-column fixed="right" label="操作" width="300">
                     <template slot-scope="scope">
-                        <el-button  @click="editFnc(scope.row)" type="text" size="small">编辑</el-button>
-                        <el-button  @click="editFnc(scope.row,'see')" type="text" size="small">详情</el-button>
-                        <el-button  @click="delFnc(scope.row)" type="text" size="small">删除</el-button>
+                        <el-button @click="editFnc(scope.row)" type="text" size="small">编辑</el-button>
+                        <el-button @click="editFnc(scope.row, 'see')" type="text" size="small">详情</el-button>
+                        <el-button @click="delFnc(scope.row)" type="text" size="small">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -66,7 +69,7 @@
 
 
 <script>
-import { permissions_list,permissions_del } from '@/api/project'
+import { permissions_list, permissions_del } from '@/api/project'
 import AuthorityDetail from './components/AuthorityDetail.vue'
 export default {
     components: { AuthorityDetail },
@@ -100,10 +103,27 @@ export default {
 
     },
     methods: {
-        delFnc(row){
+        organizeDataIntoTree(data, parentId = 0) {
+            const result = [];
+            for (const item of data) {
+                if (item.parent_id === parentId) {
+                    const children = this.organizeDataIntoTree(data, item.permission_id);
+
+                    if (children.length) {
+                        item.children = children;
+                    }
+
+                    result.push(item);
+                }
+            }
+
+            return result;
+        },
+        delFnc(row) {
             this.$confirm('是否删除该数据', '提示', {
                 confirmButtonText: '确定',
-                cancelButtonText: '取消' }).then(async () => {
+                cancelButtonText: '取消'
+            }).then(async () => {
                 let res = await permissions_del(row.permission_id)
                 if (res.code == 200) {
                     this.$message.success(res.msg)
@@ -114,8 +134,8 @@ export default {
                 this.getList(true)
             })
         },
-        editFnc(row,type){
-            this.$refs.authorityRef.openDialog(row,type)
+        editFnc(row, type) {
+            this.$refs.authorityRef.openDialog(row, type)
         },
         resertFormFnc() {
             this.formData = {
@@ -150,7 +170,7 @@ export default {
             let res = await permissions_list(this.formData)
             if (res.code == 200) {
                 this.formData.total = res.data.total;
-                this.tableData = res.data.data;
+                this.tableData = this.organizeDataIntoTree(res.data.data);
             }
         }
     }

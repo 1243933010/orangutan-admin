@@ -7,10 +7,11 @@
                         :rules="rules" label-width="120px">
                         <el-form-item label="父级权限" prop="parent_id">
                             <el-col :span="12">
-                                <el-select v-model="formData.parent_id" placeholder="请选择">
+                                <!-- <el-select v-model="formData.parent_id" placeholder="请选择">
                                     <el-option  label="首级" :value="0"> </el-option>
-                                    <el-option v-for="item in list" :key="id" :label="item.display_name" :value="item.permission_id"> </el-option>
-                                </el-select>
+                                    <el-option v-for="(item,index) in list" :key="index" :label="item.display_name" :value="item.permission_id"> </el-option>
+                                </el-select> -->
+                                <el-tree :data="list"  highlight-current :props="defaultProps" @node-click="handleNodeClick"></el-tree>
                             </el-col>
                         </el-form-item>
                         <el-form-item label="权限名称" prop="display_name">
@@ -64,13 +65,44 @@ export default {
             rules: {
                 display_name: [{ required: true, message: '请输入权限名称', trigger: 'blur' },],
                 url: [{ required: true, message: '请输入url', trigger: 'blur' },],
-                name: [{ required: true, message: '请输入权限字段', trigger: 'blur' },],
-                description: [{ required: true, message: '请输入备注', trigger: 'blur' },],
+                // name: [{ required: true, message: '请输入权限字段', trigger: 'blur' },],
+                // description: [{ required: true, message: '请输入备注', trigger: 'blur' },],
             },
-            list: []
+            list: [],
+            defaultProps: {
+                children: 'children',
+                label: 'display_name',
+                permission_id: 'permission_id',
+                parent_id: 'parent_id',
+                name: "name",
+                display_name: "display_name",
+                effect_uri: "effect_uri",
+                description: "description",
+                sort: 'sort'
+            }
         }
     },
     methods: {
+        handleNodeClick(data) {
+            console.log(data);
+            this.formData.parent_id = data.permission_id
+        },
+        organizeDataIntoTree(data, parentId = 0) {
+            const result = [];
+            for (const item of data) {
+                if (item.parent_id === parentId) {
+                    const children = this.organizeDataIntoTree(data, item.permission_id);
+
+                    if (children.length) {
+                        item.children = children;
+                    }
+
+                    result.push(item);
+                }
+            }
+
+            return result;
+        },
         openDialog(row, type) {
             this.getList()
             if (row) {
@@ -106,7 +138,9 @@ export default {
         async getList() {
             let res = await permissions_list(this.formData)
             if (res.code == 200) {
-                this.list = res.data.data;
+                this.list = this.organizeDataIntoTree(res.data.data);
+                // this.list = res.data.data;
+                // console.log(this.list)
             }
         },
         handleEmit() {
@@ -116,7 +150,7 @@ export default {
                     if (this.method == 'add') {
                         res = await permissions_add(this.formData);
                     } else if (this.method == 'edit') {
-                        res = await permissions_edit(this.formData.permission_id,this.formData);
+                        res = await permissions_edit(this.formData.permission_id, this.formData);
                     }
 
                     if (res.code == 200) {
