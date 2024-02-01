@@ -36,12 +36,14 @@
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%">
+                <el-table-column prop="" label="" width="10"></el-table-column>
+                <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="permission_id" label="权限id"></el-table-column>
                 <el-table-column prop="display_name" label="权限名称"></el-table-column>
                 <el-table-column prop="effect_uri" label="url"></el-table-column>
                 <el-table-column prop="name" label="权限字段"></el-table-column>
                 <el-table-column prop="description" label="备注"></el-table-column>
-                <el-table-column fixed="right" label="操作" width="100">
+                <el-table-column fixed="right" label="操作" width="300">
                     <template slot-scope="scope">
                         <el-button  @click="editFnc(scope.row)" type="text" size="small">编辑</el-button>
                         <el-button  @click="editFnc(scope.row,'see')" type="text" size="small">详情</el-button>

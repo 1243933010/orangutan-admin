@@ -25,7 +25,8 @@
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="" label="" width="100"></el-table-column>
+                <el-table-column prop="" label="" width="10"></el-table-column>
+                <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="notice_id" label="id" width="100"></el-table-column>
                 <el-table-column prop="title" label="标题"></el-table-column>
                 <el-table-column prop="created_at" label="创建时间">

@@ -35,7 +35,10 @@
       </div>
     </div>
     <div class="table">
-      <el-table :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100%" row-key="menu_id"  border default-expand-all
+    :tree-props="{children: 'child', hasChildren: 'hasChildren'}">
+        <el-table-column prop="" label="" width="70"></el-table-column>
+        <!-- <el-table-column type="selection" width="100"></el-table-column> -->
         <el-table-column prop="menu_id" label="菜单id" />
         <el-table-column prop="name" label="菜单名称" />
         <el-table-column prop="icon" label="图标" />
@@ -43,7 +46,7 @@
         <el-table-column prop="status" label="状态" />
         <el-table-column prop="additional" label="附加字段" />
 
-        <el-table-column fixed="right" label="操作" width="100">
+        <el-table-column fixed="right" label="操作" width="300">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="editFnc(scope.row)">编辑</el-button>
             <el-button type="text" size="small" @click="editFnc(scope.row,'see')">详情</el-button>
@@ -69,7 +72,7 @@
 </template>
 
 <script>
-import { menus_list, menus_del } from '@/api/project'
+import { menus_list, menus_del,route_list } from '@/api/project'
 import MenuDetail from './components/MenuDetail.vue'
 export default {
   components: { MenuDetail },
@@ -131,10 +134,10 @@ export default {
       if (bool) {
         this.formData.page = 1
       }
-      const res = await menus_list()
+      const res = await route_list(1007)
       if (res.code == 200) {
         this.formData.total = res.data.total
-        this.tableData = res.data.data
+        this.tableData = res.data
       }
     }
   }

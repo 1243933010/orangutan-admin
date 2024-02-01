@@ -12,6 +12,18 @@ import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 
+import Role from '@/views/system/role'
+import Menus from '@/views/system/menu'
+import Authority from '@/views/system/authority'
+
+
+// export const routeProject = {
+//   'system/role':Role,
+//   'system/menu':Menus,
+//   'system/authority':Authority,
+// }
+
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html

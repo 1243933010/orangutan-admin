@@ -1,5 +1,9 @@
 import { asyncRoutes, constantRoutes } from '@/router'
 import {route_list} from '@/api/project'
+import Layout from '@/layout'
+// import {routeProject} from '@/router/index'
+
+
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
@@ -49,13 +53,42 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(async resolve => {
+      let accessedRoutes = [];
       let res = await route_list(1007)
-      let accessedRoutes;
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      if(res.code==200){
+
+       if( res.data.length>0){
+        res.data.forEach((val,index)=>{
+          let itemObj = {};
+          itemObj.path = val.path;
+          itemObj.component = Layout;
+          itemObj.redirect=`${val.path}${val.child[0].path}`,
+          itemObj.meta = {title:val.name,icon:val.icon};
+          itemObj.children = [];
+          if(val.child.length>0){
+            val.child.forEach((item,ind)=>{
+              let component = resolve => require([`../../views/${item.additional}.vue`], resolve) 
+              itemObj.children.push({
+                path: item.path,
+                component,
+                meta: {
+                  title: item.name,
+                }
+              })
+            })
+          }
+          
+          accessedRoutes.push(itemObj)
+        })
+       }
       }
+
+
+      // if (roles.includes('admin')) {
+      //   accessedRoutes = asyncRoutes || []
+      // } else {
+      //   accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+      // }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })

@@ -37,6 +37,8 @@
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%">
+                <el-table-column prop="" label="" width="10"></el-table-column>
+                <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="mobile" label="用户手机号"></el-table-column>
                 <el-table-column prop="recharge_no" label="充值单号"></el-table-column>
                 <el-table-column prop="money" label="充值金额"></el-table-column>
@@ -141,7 +143,8 @@ export default {
         supplementary(row) {
             this.$confirm('是否补单该数据', '提示', {
                 confirmButtonText: '确定',
-                cancelButtonText: '取消' }).then(async () => {
+                cancelButtonText: '取消'
+            }).then(async () => {
                 let res = await recharge_reGet({ recharge_id: row.recharge_id })
                 if (res.code == 200) {
                     this.$message.success(res.msg)

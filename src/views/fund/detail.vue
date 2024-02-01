@@ -37,6 +37,8 @@
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%">
+                <el-table-column prop="" label="" width="10"></el-table-column>
+                <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="account" label="账号"></el-table-column>
                 <el-table-column prop="log_no" label="订单号"></el-table-column>
                 <el-table-column prop="identity" label="渠道">

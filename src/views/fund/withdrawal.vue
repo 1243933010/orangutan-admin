@@ -15,6 +15,8 @@
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%">
+                <el-table-column prop="" label="" width="10"></el-table-column>
+                <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="mobile" label="提现账号"></el-table-column>
                 <el-table-column prop="username" label="创建人"></el-table-column>
                 <el-table-column prop="withdraw_no" label="提现单号"></el-table-column>
