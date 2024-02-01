@@ -4,23 +4,22 @@
             <div class="form">
 
                 <div class="form-item">
-                    <el-select v-model="formData.use_type" placeholder="用途">
-                                <el-option label="收款" :value="1" />
-                                <el-option label="提现" :value="2" />
-                            </el-select>
+                    <el-select v-model="formData.keyword_type" placeholder="手机号" style="width: 120px;">
+                        <el-option label="手机号" value="mobile" />
+                    </el-select>
                 </div>
-                
+                <div class="form-item"><el-input v-model="formData.keyword" type="text" placeholder="请输入..." /></div>
                 <div class="form-item">
-                    <el-select v-model="formData.channel" placeholder="类型">
-                                <el-option label="paypal" value="paypal" />
-                                <el-option label="visa" value="visa" />
-                            </el-select>
+                    <el-select v-model="formData.is_auth" placeholder="认证状态" style="width: 120px;">
+                        <el-option label="全部" :value="-1" />
+                        <el-option label="已认证" :value="1" />
+                        <el-option label="未认证" :value="0" />
+                    </el-select>
                 </div>
-                <div class="form-item"><el-input v-model="formData.mobile" type="text" placeholder="用户手机号" /></div>
-                <div class="form-item"><el-input v-model="formData.username" type="text" placeholder="用户名" /></div>
                 <div class="form-item">
-                    <el-select v-model="formData.time_type" placeholder="创建时间" style="width: 120px;">
-                        <el-option label="创建时间" :value="1" />
+                    <el-select v-model="formData.time_type" placeholder="注册时间" style="width: 120px;">
+                        <el-option label="注册时间" value="created_at" />
+                        <el-option label="最后登录" value="last_at " />
                     </el-select>
                 </div>
                 <div class="form-item">
@@ -38,20 +37,34 @@
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="url" label="收款地址" />
-                <el-table-column prop="channel" label="类型" />
-                <el-table-column prop="use_type_text" label="用途" />
-                <el-table-column prop="remark" label="备注" />
-                <el-table-column prop="created_at" label="创建时间" />
-                <el-table-column prop="status" label="状态">
+                <el-table-column prop="dealers_id" label="id" />
+                <el-table-column  label="头像" width="100">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.status==1">启用</span>
-                        <span v-if="scope.row.status==0">禁用</span>
+                       <div style="width: 40px;"><img style="width:100%;" :src="scope.row.head_img" alt=""></div>
                     </template>
                 </el-table-column>
-                <el-table-column fixed="right" label="操作" width="400">
+                <el-table-column prop="username" label="账号名称" />
+                <el-table-column prop="name" label="商家名称" />
+                <el-table-column prop="mobile" label="手机号码" />
+                <el-table-column prop="email" label="邮箱" />
+                <el-table-column prop="card_no" label="姓名/身份证号" />
+                <el-table-column prop="auth_time" label="时间信息" />
+                <el-table-column prop="is_auth" label="认证状态">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="editFnc(scope.row)">编辑</el-button>
+                        <span v-if="scope.row.is_auth==1">已认证</span>
+                        <span v-if="scope.row.is_auth==0">未认证</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="auth_status" label="审核状态">
+                    <template slot-scope="scope">
+                        <span v-if="scope.row.auth_status==1">通过</span>
+                        <span v-if="scope.row.auth_status==2">驳回</span>
+                    </template>
+                </el-table-column>
+                
+                <el-table-column fixed="right" label="操作" width="200">
+                    <template slot-scope="scope">
+                        <el-button type="text" size="small" @click="openDialog(scope.row)">审核</el-button>
                         <el-button type="text" size="small" @click="editFnc(scope.row, 'see')">详情</el-button>
                     </template>
                 </el-table-column>
@@ -63,26 +76,27 @@
                 @current-change="handleCurrentChange" />
         </div>
         <Detail ref="detailRef" @handleEmit="getList(true)" />
+        <AuthenticationDialog ref="authenticationRef" @handleExamine="getList(true)" />
     </div>
 </template>
   
 <script>
-import { payment_list, admins_del } from '@/api/project'
-import Detail from './components/Detail.vue'
+import { authentication_list, admins_del } from '@/api/project'
+import Detail from './components/AuthenticationDetail.vue'
+import  AuthenticationDialog from './components/AuthenticationDialog.vue'
 
 export default {
-    components: { Detail },
+    components: { Detail,AuthenticationDialog },
     data() {
         return {
             formData: {
                 page: 1,
                 limit: 10,
                 total: 0,
-                use_type:'',
-                channel:"",
-                mobile:'',
-                username:'',
-                time_type:1,
+                keyword_type:'mobile',
+                keyword:'',
+                is_auth:'',
+                time_type:'created_at',
                 time:''
             },
             tableData: []
@@ -94,6 +108,9 @@ export default {
         this.getList(true)
     },
     methods: {
+        openDialog(row){
+            this.$refs.authenticationRef.openDialog(row.dealers_id)
+        },
         handleRole(row) {
             this.$refs.adminRolesRef.openDialog(row)
         },
@@ -120,11 +137,10 @@ export default {
                 page: 1,
                 limit: 10,
                 total: 0,
-                use_type:'',
-                channel:"",
-                mobile:'',
-                username:'',
-                time_type:1,
+                keyword_type:'mobile',
+                keyword:'',
+                is_auth:'',
+                time_type:'created_at',
                 time:''
             }
         },
@@ -141,10 +157,10 @@ export default {
                 this.formData.page = 1
             }
             if (this.formData.time.length > 0) {
-                this.formData.screen_start_time = this.formData.time[0];
-                this.formData.screen_end_time = this.formData.time[1];
+                this.formData.time_start = this.formData.time[0];
+                this.formData.time_end = this.formData.time[1];
             }
-            const res = await payment_list(this.formData)
+            const res = await authentication_list(this.formData)
             if (res.code == 200) {
                 this.formData.total = res.data.total
                 this.tableData = res.data.data

@@ -4,20 +4,35 @@
             <div>
                 <el-row>
                     <el-form ref="ruleForm" :model="formData" class="demo-form-inline" :disabled="method == 'detail'"
-                        :rules="rules" label-width="120px">
-                        <el-form-item label="收款地址" prop="url">
-                            <el-input v-model="formData.url" placeholder="收款地址" />
+                        label-width="120px">
+                        <el-form-item label="头像" prop="head_img">
+                            <img :src="formData.head_img" alt="">
                         </el-form-item>
-                        <el-form-item label="状态" prop="status">
-                            <el-select v-model="formData.status" placeholder="状态">
-                                <el-option label="禁用" :value="0" />
-                                <el-option label="启用" :value="1" />
+                        <el-form-item label="账号名称" prop="username">
+                            <el-input v-model="formData.username" placeholder="账号名称" />
+                        </el-form-item>
+                        <el-form-item label="商家名称" prop="name">
+                            <el-input v-model="formData.name" placeholder="商家名称" />
+                        </el-form-item>
+                        <el-form-item label="手机号码" prop="mobile">
+                            <el-input v-model="formData.mobile" placeholder="手机号码" />
+                        </el-form-item>
+                        <el-form-item label="身份证号" prop="card_no">
+                            <el-input v-model="formData.card_no" placeholder="身份证号" />
+                        </el-form-item>
+                        <el-form-item label="邮箱" prop="email">
+                            <el-input v-model="formData.email" placeholder="邮箱" />
+                        </el-form-item>
+                        <el-form-item label="认证状态" prop="is_auth">
+                            <el-select v-model="formData.is_auth" placeholder="认证状态">
+                                <el-option label="已认证" :value="1" />
+                                <el-option label="未认证" :value="0" />
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="用途" prop="use_type">
-                            <el-select v-model="formData.use_type" placeholder="用途">
-                                <el-option label="收款" :value="1" />
-                                <el-option label="提现" :value="2" />
+                        <el-form-item label="审核状态" prop="auth_status">
+                            <el-select v-model="formData.auth_status" placeholder="审核状态">
+                                <el-option label="通过" :value="1" />
+                                <el-option label="驳回" :value="2" />
                             </el-select>
                         </el-form-item>
                         <el-form-item label="类型" prop="channel">
@@ -65,11 +80,6 @@ export default {
             },
             defaultImgUrl: require('@/assets/upload_icon.png'),
             method: '',
-            rules: {
-                nickname: [{ required: true, message: '请输入名称', trigger: 'blur' }],
-                mobile: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-                password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-            },
             list: []
         }
     },
@@ -99,9 +109,9 @@ export default {
                 if (type) {
                     this.dialogTitle = '详情'
                     this.method = 'detail'
-                    this.getDetail(row.member_id, row.payment_id)
+                    // this.getDetail(row.member_id, row.payment_id)
                 } else {
-                    this.getDetail(row.member_id, row.payment_id)
+                    // this.getDetail(row.member_id, row.payment_id)
                     this.dialogTitle = '编辑'
                     this.method = 'edit'
                     this.formData = row

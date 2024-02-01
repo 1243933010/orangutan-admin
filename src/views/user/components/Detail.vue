@@ -140,9 +140,9 @@
                     </el-form>
                 </el-row>
             </div>
-            <span v-if="method !== 'detail'" slot="footer" class="dialog-footer">
+            <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogVisible = false">关闭</el-button>
-                <el-button type="primary" @click="handleEmit">确 定</el-button>
+                <el-button  v-if="method !== 'detail'" type="primary" @click="handleEmit">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -232,11 +232,15 @@ export default {
         handleEmit() {
             this.$refs.ruleForm.validate(async (valid) => {
                 if (valid) {
-                    let res
+                    let res;
+                    // let form = {
+
+                    // }
+
                     if (this.method == 'add') {
                         res = await admins_add(this.formData)
                     } else if (this.method == 'edit') {
-                        res = await member_edit(this.formData.admin_id, this.formData)
+                        res = await member_edit(this.formData)
                     }
 
                     if (res.code == 200) {

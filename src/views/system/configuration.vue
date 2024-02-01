@@ -4,23 +4,23 @@
             <div class="form">
 
                 <div class="form-item">
-                    <el-select v-model="formData.use_type" placeholder="用途">
-                                <el-option label="收款" :value="1" />
-                                <el-option label="提现" :value="2" />
-                            </el-select>
+                    <el-select v-model="formData.keyword_type" placeholder="类型">
+                        <el-option label="字典名称" :value="1" />
+                        <el-option label="字典标识" :value="2" />
+                    </el-select>
+                </div>
+                <div class="form-item"><el-input v-model="formData.keyword" type="text" placeholder="搜索" /></div>
+                <div class="form-item">
+                    <el-select v-model="formData.status" placeholder="状态">
+                        <el-option label="启用" :value="1" />
+                        <el-option label="禁用" :value="2" />
+                    </el-select>
                 </div>
                 
                 <div class="form-item">
-                    <el-select v-model="formData.channel" placeholder="类型">
-                                <el-option label="paypal" value="paypal" />
-                                <el-option label="visa" value="visa" />
-                            </el-select>
-                </div>
-                <div class="form-item"><el-input v-model="formData.mobile" type="text" placeholder="用户手机号" /></div>
-                <div class="form-item"><el-input v-model="formData.username" type="text" placeholder="用户名" /></div>
-                <div class="form-item">
                     <el-select v-model="formData.time_type" placeholder="创建时间" style="width: 120px;">
                         <el-option label="创建时间" :value="1" />
+                        <el-option label="修改时间" :value="2" />
                     </el-select>
                 </div>
                 <div class="form-item">
@@ -31,24 +31,26 @@
                 </div>
                 <div class="form-item submit" @click="getList(true)"><span>搜索</span></div>
                 <div class="form-item reset" @click="resertFormFnc"><span>重置</span></div>
-                <div class="form-item submit" @click="editFnc()"><span>添加钱包</span></div>
+                <div class="form-item submit" @click="editFnc()"><span>添加</span></div>
             </div>
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="url" label="收款地址" />
-                <el-table-column prop="channel" label="类型" />
-                <el-table-column prop="use_type_text" label="用途" />
-                <el-table-column prop="remark" label="备注" />
-                <el-table-column prop="created_at" label="创建时间" />
+                <el-table-column prop="group_id" label="父级id" />
+                <el-table-column prop="title" label="名称" />
+                <el-table-column prop="key" label="标识" />
+                <el-table-column prop="value" label="值" />
+                <el-table-column prop="description" label="说明" />
+                
                 <el-table-column prop="status" label="状态">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.status==1">启用</span>
-                        <span v-if="scope.row.status==0">禁用</span>
+                        <span v-if="scope.row.status == 1">启用</span>
+                        <span v-if="scope.row.status == 2">禁用</span>
                     </template>
                 </el-table-column>
+                <el-table-column prop="created_at" label="创建时间" />
                 <el-table-column fixed="right" label="操作" width="400">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="editFnc(scope.row)">编辑</el-button>
@@ -67,8 +69,8 @@
 </template>
   
 <script>
-import { payment_list, admins_del } from '@/api/project'
-import Detail from './components/Detail.vue'
+import { config_list, admins_del } from '@/api/project'
+import Detail from './components/ConfigurationDetail.vue'
 
 export default {
     components: { Detail },
@@ -78,12 +80,11 @@ export default {
                 page: 1,
                 limit: 10,
                 total: 0,
-                use_type:'',
-                channel:"",
-                mobile:'',
-                username:'',
+                keyword_type: 1,
+                keyword:'',
+                status:'',
                 time_type:1,
-                time:''
+                time: ''
             },
             tableData: []
 
@@ -120,12 +121,11 @@ export default {
                 page: 1,
                 limit: 10,
                 total: 0,
-                use_type:'',
-                channel:"",
-                mobile:'',
-                username:'',
+                keyword_type: 1,
+                keyword:'',
+                status:'',
                 time_type:1,
-                time:''
+                time: ''
             }
         },
         handleSizeChange(val) {
@@ -141,10 +141,10 @@ export default {
                 this.formData.page = 1
             }
             if (this.formData.time.length > 0) {
-                this.formData.screen_start_time = this.formData.time[0];
-                this.formData.screen_end_time = this.formData.time[1];
+                this.formData.time_start = this.formData.time[0];
+                this.formData.time_end = this.formData.time[1];
             }
-            const res = await payment_list(this.formData)
+            const res = await config_list(this.formData)
             if (res.code == 200) {
                 this.formData.total = res.data.total
                 this.tableData = res.data.data

@@ -3,24 +3,21 @@
         <div class="search">
             <div class="form">
 
+
+                <div class="form-item"><el-input v-model="formData.search_no" type="text" placeholder="请输入工单号..." /></div>
                 <div class="form-item">
-                    <el-select v-model="formData.use_type" placeholder="用途">
-                                <el-option label="收款" :value="1" />
-                                <el-option label="提现" :value="2" />
-                            </el-select>
+                    <el-select v-model="formData.order_status" placeholder="工单状态" style="width: 120px;">
+                        <el-option label="全部" value="" />
+                        <el-option label="待回复" :value="0" />
+                        <el-option label="已回复" :value="1" />
+                        <el-option label="已完成" :value="1" />
+                        <el-option label="已取消" :value="1" />
+
+                    </el-select>
                 </div>
-                
                 <div class="form-item">
-                    <el-select v-model="formData.channel" placeholder="类型">
-                                <el-option label="paypal" value="paypal" />
-                                <el-option label="visa" value="visa" />
-                            </el-select>
-                </div>
-                <div class="form-item"><el-input v-model="formData.mobile" type="text" placeholder="用户手机号" /></div>
-                <div class="form-item"><el-input v-model="formData.username" type="text" placeholder="用户名" /></div>
-                <div class="form-item">
-                    <el-select v-model="formData.time_type" placeholder="创建时间" style="width: 120px;">
-                        <el-option label="创建时间" :value="1" />
+                    <el-select v-model="formData.time_type" placeholder="注册时间" style="width: 120px;">
+                        <el-option label="注册时间" value="created_at" />
                     </el-select>
                 </div>
                 <div class="form-item">
@@ -31,28 +28,32 @@
                 </div>
                 <div class="form-item submit" @click="getList(true)"><span>搜索</span></div>
                 <div class="form-item reset" @click="resertFormFnc"><span>重置</span></div>
-                <div class="form-item submit" @click="editFnc()"><span>添加钱包</span></div>
             </div>
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="url" label="收款地址" />
-                <el-table-column prop="channel" label="类型" />
-                <el-table-column prop="use_type_text" label="用途" />
-                <el-table-column prop="remark" label="备注" />
+                <el-table-column prop="work_order_id" label="id" />
+                <el-table-column prop="mobile" label="手机号码" />
+                <el-table-column prop="work_order_no" label="工单号" />
+                <el-table-column prop="title" label="工单标题" />
                 <el-table-column prop="created_at" label="创建时间" />
-                <el-table-column prop="status" label="状态">
+                <el-table-column prop="order_status" label="工单状态">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.status==1">启用</span>
-                        <span v-if="scope.row.status==0">禁用</span>
+                        <span v-if="scope.row.order_status == 0">待回复</span>
+                        <span v-if="scope.row.order_status == 1">已回复</span>
+                        <span v-if="scope.row.order_status == 1">已完成</span>
+                        <span v-if="scope.row.order_status == 1">已取消</span>
+
                     </template>
                 </el-table-column>
-                <el-table-column fixed="right" label="操作" width="400">
+
+
+                <el-table-column fixed="right" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="editFnc(scope.row)">编辑</el-button>
-                        <el-button type="text" size="small" @click="editFnc(scope.row, 'see')">详情</el-button>
+                        <el-button type="text" size="small" @click="openDialog(scope.row)">审核</el-button>
+                        <el-button type="text" size="small" @click="handleBtn(scope.row, 'see')">查看</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -63,27 +64,28 @@
                 @current-change="handleCurrentChange" />
         </div>
         <Detail ref="detailRef" @handleEmit="getList(true)" />
+
+        <CustomerService ref="CustomerService" />
     </div>
 </template>
   
 <script>
-import { payment_list, admins_del } from '@/api/project'
-import Detail from './components/Detail.vue'
-
+import { workorder_list, admins_del } from '@/api/project'
+import Detail from './components/WorkOrderDetail.vue'
+import DirectiveDialog from '@/components/DirectiveDialog/index'
+import CustomerService from '@/components/CustomerService/index'
 export default {
-    components: { Detail },
+    components: { Detail, DirectiveDialog, CustomerService },
     data() {
         return {
             formData: {
                 page: 1,
                 limit: 10,
                 total: 0,
-                use_type:'',
-                channel:"",
-                mobile:'',
-                username:'',
-                time_type:1,
-                time:''
+                search_no: '',
+                time_type: 'created_at',
+                time: '',
+                order_status: ''
             },
             tableData: []
 
@@ -94,6 +96,12 @@ export default {
         this.getList(true)
     },
     methods: {
+        handleBtn(scope) {
+            this.$refs.CustomerService.init()
+        },
+        openDialog(row) {
+            this.$refs.authenticationRef.openDialog(row.dealers_id)
+        },
         handleRole(row) {
             this.$refs.adminRolesRef.openDialog(row)
         },
@@ -120,12 +128,10 @@ export default {
                 page: 1,
                 limit: 10,
                 total: 0,
-                use_type:'',
-                channel:"",
-                mobile:'',
-                username:'',
-                time_type:1,
-                time:''
+                search_no: '',
+                time_type: 'created_at',
+                time: '',
+                order_status: ''
             }
         },
         handleSizeChange(val) {
@@ -144,7 +150,7 @@ export default {
                 this.formData.screen_start_time = this.formData.time[0];
                 this.formData.screen_end_time = this.formData.time[1];
             }
-            const res = await payment_list(this.formData)
+            const res = await workorder_list(this.formData)
             if (res.code == 200) {
                 this.formData.total = res.data.total
                 this.tableData = res.data.data

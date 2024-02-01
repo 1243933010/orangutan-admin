@@ -3,14 +3,8 @@
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" width="40%">
       <div>
         <el-row>
-          <el-form
-            ref="ruleForm"
-            :model="formData"
-            class="demo-form-inline"
-            :disabled="method == 'detail'"
-            :rules="rules"
-            label-width="120px"
-          >
+          <el-form ref="ruleForm" :model="formData" class="demo-form-inline" :disabled="method == 'detail'" :rules="rules"
+            label-width="120px">
             <!-- <el-form-item label="父级权限" prop="parent_id">
                             <el-col :span="12">
                                 <el-select v-model="formData.parent_id" placeholder="请选择">
@@ -41,17 +35,11 @@
             </el-form-item>
             <el-form-item label="头像" prop="email">
               <!-- <el-col :span="12"> -->
-              <el-upload
-                class="upload-com"
-                action=""
-                :file-list="[]"
-                :http-request="(files) => httpRequest('avatar', files)"
-                :before-upload="beforeAvatarUpload"
-                :limit="1"
-              >
+              <el-upload class="upload-com" action="" :file-list="[]"
+                :http-request="(files) => httpRequest('avatar', files)" :before-upload="beforeAvatarUpload" :limit="1">
                 <i class="el-icon-plus" style="font-size:82px;" :size="18" />
                 <div class="pic">
-                  <img class="img" :src="formData.avatar ? formData.avatar :''" alt="">
+                  <img class="img" :src="formData.avatar ? formData.avatar : ''" alt="">
 
                 </div>
               </el-upload>
@@ -150,7 +138,7 @@ export default {
       }
     },
     handleEmit() {
-      this.$refs.ruleForm.validate(async(valid) => {
+      this.$refs.ruleForm.validate(async (valid) => {
         if (valid) {
           let res
           if (this.method == 'add') {

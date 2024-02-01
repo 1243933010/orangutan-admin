@@ -159,6 +159,15 @@ export const asyncRoutes = [
           title: '钱包管理',
            // or you can only set roles in sub nav
         }
+      },
+      {
+        path: 'authentication',
+        component: () => import('@/views/user/authentication'),
+        name: 'authentication',
+        meta: {
+          title: '认证申请',
+           // or you can only set roles in sub nav
+        }
       }
     ]
   },
@@ -180,6 +189,15 @@ export const asyncRoutes = [
         name: 'collection',
         meta: {
           title: '收款订单',
+           // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'workOrder',
+        component: () => import('@/views/order/workOrder'),
+        name: 'workOrder',
+        meta: {
+          title: '工单管理',
            // or you can only set roles in sub nav
         }
       }
@@ -319,6 +337,15 @@ export const asyncRoutes = [
         name: 'menus',
         meta: {
           title: '菜单管理',
+           // or you can only set roles in sub nav
+        }
+      },
+      {
+        path: 'configuration',
+        component: () => import('@/views/system/configuration'),
+        name: 'configuration',
+        meta: {
+          title: '配置管理',
            // or you can only set roles in sub nav
         }
       },

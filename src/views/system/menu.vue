@@ -131,16 +131,32 @@ export default {
       if (bool) {
         this.formData.page = 1
       }
-      const res = await route_list(1007)
+      const res = await menus_list()
       if (res.code == 200) {
         this.formData.total = res.data.total
-        res.data.forEach(val => {
-          val.children = val.child;
-        })
+        // res.data.forEach(val => {
+        //   val.children = val.child;
+        // })
        
-        this.tableData=res.data
+        this.tableData=this.organizeDataIntoTree(res.data.data)
       }
-    }
+    },
+    organizeDataIntoTree(data, parentId = 0) {
+            const result = [];
+            for (const item of data) {
+                if (item.parent_id === parentId) {
+                    const children = this.organizeDataIntoTree(data, item.menu_id);
+
+                    if (children.length) {
+                        item.children = children;
+                    }
+
+                    result.push(item);
+                }
+            }
+
+            return result;
+        },
   }
 }
 </script>

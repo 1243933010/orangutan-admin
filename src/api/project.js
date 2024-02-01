@@ -411,10 +411,69 @@ export function payment_add(data) {
 
 
 // 钱包编辑
-
 export function payment_edit(data) {
   return request({
     url: '/admin/payment/wallet_edit',
+    method: 'post',
+    data
+  })
+}
+
+
+// 认证申请-列表
+export function authentication_list(params) {
+  return request({
+    url: '/admin/authentication/list',
+    method: 'get',
+    params
+  })
+}
+
+// 认证申请-审核
+export function authentication_examine(data) {
+  return request({
+    url: '/admin/authentication/examine',
+    method: 'post',
+    data
+  })
+}
+
+
+
+// 认证申请-列表
+export function workorder_list(data) {
+  return request({
+    url: '/admin/workorder/list',
+    method: 'post',
+    data
+  })
+}
+
+
+
+// 配置列表
+export function config_list(params) {
+  return request({
+    url: '/admin/config/list',
+    method: 'get',
+    params
+  })
+}
+
+
+// 添加配置
+export function config_add(data) {
+  return request({
+    url: '/admin/config/add',
+    method: 'post',
+    data
+  })
+}
+
+// 修改配置
+export function config_edit(data) {
+  return request({
+    url: '/admin/config/edit',
     method: 'post',
     data
   })
