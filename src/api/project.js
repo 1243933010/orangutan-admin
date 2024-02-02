@@ -440,7 +440,7 @@ export function authentication_examine(data) {
 
 
 
-// 认证申请-列表
+// 工单-列表
 export function workorder_list(data) {
   return request({
     url: '/admin/workorder/list',
@@ -448,6 +448,37 @@ export function workorder_list(data) {
     data
   })
 }
+
+
+
+// 工单-查看工单
+export function workorder_detail(data) {
+  return request({
+    url: '/admin/workorder/get_store',
+    method: 'post',
+    data
+  })
+}
+
+
+// 工单-工单已解决
+export function workorder_resolved(data) {
+  return request({
+    url: '/admin/workorder/resolved_store',
+    method: 'post',
+    data
+  })
+}
+
+// 工单-查看工单聊天信息
+export function workorder_chat_history(data) {
+  return request({
+    url: '/admin/workorder/get_chat_history',
+    method: 'post',
+    data
+  })
+}
+
 
 
 
@@ -471,9 +502,39 @@ export function config_add(data) {
 }
 
 // 修改配置
-export function config_edit(data) {
+export function config_edit(id,data) {
   return request({
-    url: '/admin/config/edit',
+    url: `/admin/config/edit/${id}`,
+    method: 'post',
+    data
+  })
+}
+
+
+// 卡商列表
+export function dealers_list(data) {
+  return request({
+    url: '/admin/dealers/list',
+    method: 'post',
+    data
+  })
+}
+
+
+// 卡商详情
+export function dealers_detail(data) {
+  return request({
+    url: '/admin/dealers/get_dealers',
+    method: 'post',
+    data
+  })
+}
+
+
+// 编辑卡商信息
+export function dealers_edit(data) {
+  return request({
+    url: '/admin/dealers/edit_dealers',
     method: 'post',
     data
   })

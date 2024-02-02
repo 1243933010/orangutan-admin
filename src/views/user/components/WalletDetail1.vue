@@ -55,14 +55,7 @@ export default {
         return {
             dialogTitle: '新增',
             dialogVisible: false,
-            formData: {
-                head_img: '',
-                nickname: '',
-                mobile: '',
-                password: '',
-                email: '',
-
-            },
+            formData: { },
             defaultImgUrl: require('@/assets/upload_icon.png'),
             method: '',
             rules: {
@@ -74,54 +67,12 @@ export default {
         }
     },
     methods: {
-        beforeAvatarUpload(file) {
-            const isIMG = file.type.includes('image')
-
-            if (!isIMG) {
-                this.$message.error('上传头像只能是图片!')
-            }
-            return isIMG
-        },
-        async httpRequest(type, files) {
-            const formData = new FormData()
-            formData.append('file', files.file) // 文件名
-            console.log(type, files, formData)
-            const res = await uploadImg(formData)
-            console.log(res, process.env.VUE_APP_FILE_URL)
-            if (res.code == 200) {
-                this.formData[type] = process.env.VUE_APP_FILE_URL + res.data
-                return
-            }
-            this.$message.error(res.msg)
-        },
+        
         openDialog(row, type) {
-            if (row) {
-                if (type) {
-                    this.dialogTitle = '详情'
-                    this.method = 'detail'
-                    this.getDetail(row.payment_id)
-                } else {
-                    this.getDetail(row.payment_id)
-                    this.dialogTitle = '编辑'
-                    this.method = 'edit'
-                    this.formData = row
-                }
-            } else {
-                this.dialogTitle = '添加'
-                this.method = 'add'
-                this.formData = {
-                    // "dealers_id": 2,
-                    // "url": "http:\/\/www.baidu.com",
-                    // "status": 0,
-                    // "use_type": 2,
-                    // "max_price": "5000.00",
-                    // "sort": 301,
-                    // "remark": "过过过过",
-                    // "created_at": "1706772409",
-                    // "updated_at": "1706855030",
-                    // "channel": "visa"
-                }
-            }
+            this.dialogTitle = '添加'
+            this.method = 'add'
+            this.formData.member_id = row.member_id
+
             this.dialogVisible = true
         },
         async getDetail(payment_id) {

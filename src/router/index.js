@@ -161,6 +161,15 @@ export const asyncRoutes = [
         }
       },
       {
+        path: 'cardMerchants',
+        component: () => import('@/views/user/cardMerchants'),
+        name: 'cardMerchants',
+        meta: {
+          title: '卡商管理',
+           // or you can only set roles in sub nav
+        }
+      },
+      {
         path: 'authentication',
         component: () => import('@/views/user/authentication'),
         name: 'authentication',

@@ -126,7 +126,7 @@ export default {
                     if (this.method == 'add') {
                         res = await config_add(this.formData)
                     } else if (this.method == 'edit') {
-                        res = await config_edit(this.formData.admin_id, this.formData)
+                        res = await config_edit(this.formData.config_id, this.formData)
                     }
 
                     if (res.code == 200) {

@@ -10,8 +10,8 @@
                         <el-option label="全部" value="" />
                         <el-option label="待回复" :value="0" />
                         <el-option label="已回复" :value="1" />
-                        <el-option label="已完成" :value="1" />
-                        <el-option label="已取消" :value="1" />
+                        <el-option label="已完成" :value="2" />
+                        <el-option label="已取消" :value="3" />
 
                     </el-select>
                 </div>
@@ -43,8 +43,8 @@
                     <template slot-scope="scope">
                         <span v-if="scope.row.order_status == 0">待回复</span>
                         <span v-if="scope.row.order_status == 1">已回复</span>
-                        <span v-if="scope.row.order_status == 1">已完成</span>
-                        <span v-if="scope.row.order_status == 1">已取消</span>
+                        <span v-if="scope.row.order_status == 2">已完成</span>
+                        <span v-if="scope.row.order_status == 3">已取消</span>
 
                     </template>
                 </el-table-column>
@@ -52,8 +52,8 @@
 
                 <el-table-column fixed="right" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="openDialog(scope.row)">审核</el-button>
-                        <el-button type="text" size="small" @click="handleBtn(scope.row, 'see')">查看</el-button>
+                        <el-button type="text" size="small" @click="openDialog(scope.row, 'see')">详情</el-button>
+                        <el-button type="text" size="small" @click="handleBtn(scope.row)">回复</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -65,17 +65,17 @@
         </div>
         <Detail ref="detailRef" @handleEmit="getList(true)" />
 
-        <CustomerService ref="CustomerService" />
+        <CustomerService ref="customerServiceRef" />
     </div>
 </template>
   
 <script>
 import { workorder_list, admins_del } from '@/api/project'
 import Detail from './components/WorkOrderDetail.vue'
-import DirectiveDialog from '@/components/DirectiveDialog/index'
-import CustomerService from '@/components/CustomerService/index'
+// import DirectiveDialog from '@/components/DirectiveDialog/index'
+import CustomerService from './components/CustomerService'
 export default {
-    components: { Detail, DirectiveDialog, CustomerService },
+    components: { Detail, CustomerService },
     data() {
         return {
             formData: {
@@ -96,14 +96,11 @@ export default {
         this.getList(true)
     },
     methods: {
-        handleBtn(scope) {
-            this.$refs.CustomerService.init()
+        handleBtn(row) {
+            this.$refs.customerServiceRef.init(row)
         },
-        openDialog(row) {
-            this.$refs.authenticationRef.openDialog(row.dealers_id)
-        },
-        handleRole(row) {
-            this.$refs.adminRolesRef.openDialog(row)
+        openDialog(row,type) {
+            this.$refs.detailRef.openDialog(row,type)
         },
         delFnc(row) {
             this.$confirm('是否删除该管理员', '提示', {

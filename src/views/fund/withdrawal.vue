@@ -1,17 +1,35 @@
 <template>
     <div>
         <div class="search">
-            <el-form :inline="true" :model="formData" class="demo-form-inline" :rules="formRule">
-                <el-form-item label="创建人">
-                    <el-input v-model="formData.username" placeholder="创建人"></el-input>
-                </el-form-item>
-                <el-form-item label="提现账号">
-                    <el-input v-model="formData.mobile" placeholder="提现账号"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="getList(true)">查询</el-button>
-                </el-form-item>
-            </el-form>
+            <div class="form">
+
+                <div class="form-item">
+                    <el-select v-model="formData.keyword_type" placeholder="资金流水号" style="width: 120px;">
+                        <el-option label="提现单号" value="withdraw_no" />
+                        <el-option label="交易哈希" value="transfer_hash" />
+                    </el-select>
+                </div>
+                <div class="form-item"><el-input v-model="formData.keyword" type="number" placeholder="请输入...." /></div>
+                <div class="form-item">
+                    <el-select v-model="formData.status" placeholder="状态" style="width: 120px;">
+                        <el-option label="全部" :value="-1" />
+                        <el-option v-for="(item,index) in statusList" :key="index" :label="item.name" :value="item.id" />
+                    </el-select>
+                </div>
+                <div class="form-item">
+                    <el-select v-model="formData.time_type" placeholder="创建时间" style="width: 120px;">
+                        <el-option label="创建时间" :value="1" />
+                    </el-select>
+                </div>
+                <div class="form-item">
+                    <el-date-picker v-model="formData.time" value-format="yyyy-MM-dd" type="daterange" range-separator="至"
+                        start-placeholder="开始日期" end-placeholder="结束日期">
+                    </el-date-picker>
+
+                </div>
+                <div class="form-item submit" @click="getList(true)"><span>搜索</span></div>
+                <div class="form-item reset" @click="resertFormFnc"><span>重置</span></div>
+            </div>
         </div>
         <div class="table">
             <el-table :data="tableData" style="width: 100%" stripe>
@@ -67,8 +85,10 @@ export default {
                 page: 1,
                 limit: 10,
                 total: 0,
-                username: '',
-                mobile: ''
+                keyword_type:'withdraw_no',
+                keyword:'',
+                time_type:1,
+                time:''
             },
             formRule: {
                 name: [
@@ -89,6 +109,17 @@ export default {
 
     },
     methods: {
+        resertFormFnc() {
+            this.formData = {
+                page: 1,
+                limit: 10,
+                total: 0,
+                keyword_type:'withdraw_no',
+                keyword:'',
+                time_type:1,
+                time:''
+            }
+        },
         openDialog(row){
             this.$refs.withdrawalRef.openDialog(row.withdraw_id)
         },
@@ -120,6 +151,10 @@ export default {
             if (bool) {
                 this.formData.page = 1;
             }
+            if (this.formData.time.length > 0) {
+                this.formData.time_start = this.formData.time[0];
+                this.formData.time_end = this.formData.time[1];
+            }
             let res = await withdraw_list(this.formData)
             if (res.code == 200) {
                 this.formData.total = res.data.total;
@@ -129,3 +164,44 @@ export default {
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+.form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .form-item {
+        margin-right: 7px;
+    }
+
+    .submit {
+        cursor: pointer;
+        width: 94px;
+        height: 38px;
+        background: linear-gradient(90deg, #5B80EE 0%, #3E63F4 100%);
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 14px;
+    }
+
+    .reset {
+        cursor: pointer;
+        width: 94px;
+        height: 38px;
+        background: #FFFFFF;
+        border: 1px solid #F1F1F1;
+        border-radius: 6px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #333333;
+        font-size: 14px;
+    }
+}
+</style>

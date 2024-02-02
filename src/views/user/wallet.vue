@@ -68,7 +68,7 @@
   
 <script>
 import { payment_list, admins_del } from '@/api/project'
-import Detail from './components/Detail.vue'
+import Detail from './components/WalletDetail.vue'
 
 export default {
     components: { Detail },
