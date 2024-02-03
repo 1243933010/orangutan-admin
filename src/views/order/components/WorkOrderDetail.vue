@@ -5,38 +5,37 @@
                 <el-row>
                     <el-form ref="ruleForm" :model="formData" class="demo-form-inline" :disabled="method == 'detail'"
                         :rules="rules" label-width="120px">
-                        <el-form-item label="商家名称" prop="dealers_name">
-                            <el-input v-model="formData.dealers_name" placeholder="商家名称" />
+                        <el-form-item label="工单号" prop="work_order_no">
+                            <el-input v-model="formData.work_order_no" placeholder="工单号" />
                         </el-form-item>
-                        <el-form-item label="收单数量" prop="order_num">
-                            <el-input v-model="formData.order_num" placeholder="收单数量" />
+                        <el-form-item label="邮箱" prop="email">
+                            <el-input v-model="formData.email" placeholder="邮箱" />
                         </el-form-item>
-                        <el-form-item label="收单金额" prop="order_money">
-                            <el-input v-model="formData.order_money" placeholder="收单金额" />
+                        <el-form-item label="手机号" prop="mobile">
+                            <el-input v-model="formData.mobile" placeholder="手机号" />
                         </el-form-item>
-                        <el-form-item label="汇率" prop="rate">
-                            <el-input v-model="formData.rate" placeholder="汇率" />
-                        </el-form-item>
-                        <el-form-item label="最小金额" prop="min_money">
-                            <el-input v-model="formData.min_money" placeholder="最小金额" />
-                        </el-form-item>
-                        <el-form-item label="最大金额" prop="max_money">
-                            <el-input v-model="formData.max_money" placeholder="最大金额" />
-                        </el-form-item>
-                      
-                        <el-form-item label="状态" prop="status">
-                            <el-select v-model="formData.status" placeholder="状态">
-                                <el-option label="离线" :value="0" />
-                                <el-option label="在线" :value="1" />
-                                <el-option label="冻结" :value="2" />
+                        <el-form-item label="工单状态" prop="order_status">
+                            <el-select v-model="formData.order_status" placeholder="工单状态">
+                                <el-option label="待回复" :value="0" />
+                                <el-option label="已回复" :value="1" />
+                                <el-option label="已完成" :value="2" />
+                                <el-option label="已取消" :value="3" />
                             </el-select>
                         </el-form-item>
-                        <el-form-item label="排序" prop="sort">
-                            <el-input v-model="formData.sort" placeholder="排序" />
+                        <el-form-item label="工单标题" prop="title">
+                            <el-input v-model="formData.title" placeholder="工单标题" />
                         </el-form-item>
-                        <el-form-item label="备注" prop="remark">
-                            <el-input v-model="formData.remark" placeholder="备注" />
+                        <el-form-item label="工单内容" prop="content">
+                            <el-input v-model="formData.content" placeholder="工单内容" />
                         </el-form-item>
+                        <el-form-item label="工单状态描述" prop="order_status_text">
+                            <el-input v-model="formData.order_status_text" placeholder="工单状态描述" />
+                        </el-form-item>
+                        <el-form-item label="更新时间" prop="updated_at">
+                            <el-input v-model="formData.updated_at" placeholder="更新时间" />
+                        </el-form-item>
+                       
+                       
 
                     </el-form>
                 </el-row>
