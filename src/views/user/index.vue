@@ -12,7 +12,7 @@
                         <el-option label="身份证号" :value="5" />
                     </el-select>
                 </div>
-                <div class="form-item"><el-input v-model="formData.search_name" type="number" placeholder="请输入...." /></div>
+                <div class="form-item"><el-input v-model="formData.search_name" placeholder="请输入...." /></div>
                 <div class="form-item">
                     <el-select v-model="formData.is_auth" placeholder="认证状态" style="width: 120px;">
                         <!-- <el-option label="全部" value="" /> -->
@@ -53,7 +53,16 @@
 
                 <el-table-column prop="balance_money" label="账户余额" />
 
-                <el-table-column prop="created_at" label="时间信息" />
+                <el-table-column prop="created_at" label="创建时间">
+                    <template slot-scope="scope">
+                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="updated_at" label="更新时间">
+                    <template slot-scope="scope">
+                       <span>{{ convertTimestampToDateString(scope.row.updated_at) }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="is_auth_text" label="认证状态" />
                 <el-table-column fixed="right" label="操作" width="400">
                     <template slot-scope="scope">
@@ -79,7 +88,7 @@
 import { member_list, admins_del } from '@/api/project'
 import Detail from './components/Detail.vue'
 import WalletDetail from './components/WalletDetail1.vue'
-
+import {convertTimestampToDateString} from '@/utils/time'
 export default {
     components: { Detail,WalletDetail },
     data() {
@@ -103,6 +112,7 @@ export default {
     mounted() {
         // this.getWithdrawOptions()
         this.getList(true)
+        this.convertTimestampToDateString = convertTimestampToDateString;
     },
     methods: {
         handleWallet(row) {

@@ -9,7 +9,7 @@
                         <el-option label="交易哈希" value="transfer_hash" />
                     </el-select>
                 </div>
-                <div class="form-item"><el-input v-model="formData.keyword" type="number" placeholder="请输入...." /></div>
+                <div class="form-item"><el-input v-model="formData.keyword" placeholder="请输入...." /></div>
                 <div class="form-item">
                     <el-select v-model="formData.status" placeholder="状态" style="width: 120px;">
                         <el-option label="全部" :value="-1" />
@@ -51,8 +51,16 @@
                         <span v-if="scope.row.status == 3">充值失败</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="created_at" label="创建时间"></el-table-column>
-                <el-table-column prop="pay_time" label="到账时间"></el-table-column>
+                <el-table-column prop="created_at" label="创建时间">
+                    <template slot-scope="scope">
+                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column prop="pay_time" label="到账时间">
+                    <template slot-scope="scope">
+                       <span>{{ convertTimestampToDateString(scope.row.pay_time) }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.examine_status == 0" @click="markFnc(scope.row)" type="text"
@@ -79,6 +87,7 @@
 <script>
 import { recharge_list, recharge_checkFail, recharge_reGet } from '@/api/project'
 import WithdrawalDialog from './components/WithdrawalDialog.vue'
+import {convertTimestampToDateString} from '@/utils/time'
 export default {
     components: { WithdrawalDialog },
     data() {
@@ -108,7 +117,7 @@ export default {
     mounted() {
         // this.getWithdrawOptions()
         this.getList(true);
-
+        this.convertTimestampToDateString = convertTimestampToDateString;
     },
     methods: {
         resertFormFnc() {

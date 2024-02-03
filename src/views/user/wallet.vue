@@ -38,6 +38,8 @@
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
+                <el-table-column prop="username" label="用户用户名" />
+                <el-table-column prop="mobile" label="用户手机号" />
                 <el-table-column prop="url" label="收款地址" />
                 <el-table-column prop="channel" label="类型" />
                 <el-table-column prop="use_type_text" label="用途" />

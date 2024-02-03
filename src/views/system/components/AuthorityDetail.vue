@@ -11,7 +11,8 @@
                                     <el-option  label="首级" :value="0"> </el-option>
                                     <el-option v-for="(item,index) in list" :key="index" :label="item.display_name" :value="item.permission_id"> </el-option>
                                 </el-select> -->
-                                <el-tree :data="list"  highlight-current :props="defaultProps" @node-click="handleNodeClick"></el-tree>
+                                <el-tree :data="list" highlight-current :props="defaultProps"
+                                    @node-click="handleNodeClick"></el-tree>
                             </el-col>
                         </el-form-item>
                         <el-form-item label="权限名称" prop="display_name">
@@ -138,9 +139,16 @@ export default {
         async getList() {
             let res = await permissions_list(this.formData)
             if (res.code == 200) {
-                this.list = this.organizeDataIntoTree(res.data.data);
+                this.list = [
+                    {
+                        display_name:'首级',
+                        name:'index',
+                        permission_id:0,
+                        children:this.organizeDataIntoTree(res.data.data)
+                    }
+                ]
                 // this.list = res.data.data;
-                // console.log(this.list)
+                console.log(this.list)
             }
         },
         handleEmit() {

@@ -99,7 +99,7 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(async () => {
-        const res = await menus_del(row.permission_id)
+        const res = await menus_del(row.menu_id)
         if (res.code == 200) {
           this.$message.success(res.msg)
           this.getList(true)

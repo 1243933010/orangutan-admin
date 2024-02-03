@@ -10,7 +10,7 @@
                         <el-option label="资金账号" value="account" />
                     </el-select>
                 </div>
-                <div class="form-item"><el-input v-model="formData.keyword" type="number" placeholder="请输入...." /></div>
+                <div class="form-item"><el-input v-model="formData.keyword" placeholder="请输入...." /></div>
                 <div class="form-item">
                     <el-select v-model="formData.method" placeholder="状态" style="width: 120px;">
                         <el-option label="充值" value="recharge" />
@@ -58,7 +58,11 @@
                 <el-table-column prop="money" label="变动金额"></el-table-column>
                 <el-table-column prop="before_money" label="变动前金额"></el-table-column>
                 <el-table-column prop="remark" label="备注"></el-table-column>
-                <el-table-column prop="created_at" label="创建时间"></el-table-column>
+                <el-table-column prop="created_at" label="创建时间">
+                    <template slot-scope="scope">
+                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="from_no" label="来源单号"></el-table-column>
                 <!-- <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
@@ -86,6 +90,8 @@
 <script>
 import { fund_list, recharge_checkFail, recharge_reGet, fund_export } from '@/api/project'
 import WithdrawalDialog from './components/WithdrawalDialog.vue'
+import {convertTimestampToDateString} from '@/utils/time'
+
 export default {
     components: { WithdrawalDialog },
     data() {
@@ -115,6 +121,7 @@ export default {
     mounted() {
         // this.getWithdrawOptions()
         this.getList(true);
+        this.convertTimestampToDateString = convertTimestampToDateString;
 
     },
     methods: {

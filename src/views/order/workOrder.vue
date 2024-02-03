@@ -38,7 +38,11 @@
                 <el-table-column prop="mobile" label="手机号码" />
                 <el-table-column prop="work_order_no" label="工单号" />
                 <el-table-column prop="title" label="工单标题" />
-                <el-table-column prop="created_at" label="创建时间" />
+                <el-table-column prop="created_at" label="创建时间">
+                    <template slot-scope="scope">
+                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="order_status" label="工单状态">
                     <template slot-scope="scope">
                         <span v-if="scope.row.order_status == 0">待回复</span>
@@ -74,6 +78,8 @@ import { workorder_list, admins_del } from '@/api/project'
 import Detail from './components/WorkOrderDetail.vue'
 // import DirectiveDialog from '@/components/DirectiveDialog/index'
 import CustomerService from './components/CustomerService'
+import {convertTimestampToDateString} from '@/utils/time'
+
 export default {
     components: { Detail, CustomerService },
     data() {
@@ -94,6 +100,7 @@ export default {
     mounted() {
         // this.getWithdrawOptions()
         this.getList(true)
+        this.convertTimestampToDateString = convertTimestampToDateString;
     },
     methods: {
         handleBtn(row) {

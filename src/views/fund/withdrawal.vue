@@ -9,7 +9,7 @@
                         <el-option label="交易哈希" value="transfer_hash" />
                     </el-select>
                 </div>
-                <div class="form-item"><el-input v-model="formData.keyword" type="number" placeholder="请输入...." /></div>
+                <div class="form-item"><el-input v-model="formData.keyword" placeholder="请输入...." /></div>
                 <div class="form-item">
                     <el-select v-model="formData.status" placeholder="状态" style="width: 120px;">
                         <el-option label="全部" :value="-1" />
@@ -43,7 +43,11 @@
                 <el-table-column prop="money" label="提现金额"></el-table-column>
                 <el-table-column prop="fee" label="固定费用"></el-table-column>
                 <el-table-column prop="rate" label="提现费率"></el-table-column>
-                <el-table-column prop="created_at" label="提现时间"></el-table-column>
+                <el-table-column prop="created_at" label="创建时间">
+                    <template slot-scope="scope">
+                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="examine_status_name" label="审核状态">
                     <template slot-scope="scope">
                         <span>{{ status[scope.row.examine_status_name] || '' }}</span>
@@ -77,6 +81,8 @@
 <script>
 import { withdraw_list, withdraw_options } from '@/api/project'
 import  WithdrawalDialog from './components/WithdrawalDialog.vue'
+import {convertTimestampToDateString} from '@/utils/time'
+
 export default {
     components:{WithdrawalDialog},
     data() {
@@ -105,7 +111,7 @@ export default {
     },
     mounted() {
         this.getWithdrawOptions()
-
+        this.convertTimestampToDateString = convertTimestampToDateString;
 
     },
     methods: {

@@ -539,3 +539,33 @@ export function dealers_edit(data) {
     data
   })
 }
+
+
+
+// 扣款订单-列表
+export function deduct_list(params) {
+  return request({
+    url: '/admin/deduct/list',
+    method: 'get',
+    params
+  })
+}
+
+
+// 扣款订单-添加
+export function deduct_add(data) {
+  return request({
+    url: '/admin/deduct/add',
+    method: 'post',
+    data
+  })
+}
+
+// 扣款订单-审核
+export function deduct_examine(data) {
+  return request({
+    url: '/admin/deduct/examine',
+    method: 'post',
+    data
+  })
+}

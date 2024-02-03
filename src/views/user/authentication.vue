@@ -30,7 +30,6 @@
                 </div>
                 <div class="form-item submit" @click="getList(true)"><span>搜索</span></div>
                 <div class="form-item reset" @click="resertFormFnc"><span>重置</span></div>
-                <div class="form-item submit" @click="editFnc()"><span>添加钱包</span></div>
             </div>
         </div>
         <div class="table">

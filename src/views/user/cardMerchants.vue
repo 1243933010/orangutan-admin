@@ -12,8 +12,8 @@
                         <el-option label="身份证号" :value="5"  />
                     </el-select>
                 </div>
-                <div class="form-item"><el-input v-model="formData.search_name" type="number" placeholder="请输入...." /></div>
-                <div class="form-item"><el-input v-model="formData.dealers_name" type="number" placeholder="请输入商家名称" /></div>
+                <div class="form-item"><el-input v-model="formData.search_name"  placeholder="请输入...." /></div>
+                <div class="form-item"><el-input v-model="formData.dealers_name" placeholder="请输入商家名称" /></div>
                 <div class="form-item">
                     <el-select v-model="formData.payment_status" placeholder="收款状态" style="width: 120px;">
                         <el-option label="开启" :value="1" />
@@ -58,13 +58,16 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="rate" label="汇率" />
-                <el-table-column prop="created_at" label="创建时间" />
-                <!-- <el-table-column prop="is_auth" label="认证状态">
+                <el-table-column prop="created_at" label="创建时间">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.is_auth==1">已认证</span>
-                        <span v-if="scope.row.is_auth==0">未认证</span>
+                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
                     </template>
-                </el-table-column> -->
+                </el-table-column>
+                <el-table-column prop="updated_at" label="更新时间">
+                    <template slot-scope="scope">
+                       <span>{{ convertTimestampToDateString(scope.row.updated_at) }}</span>
+                    </template>
+                </el-table-column>
                 
                 <el-table-column fixed="right" label="操作" width="400">
                     <template slot-scope="scope">
@@ -91,6 +94,7 @@
 <script>
 import { dealers_list, withdraw_options } from '@/api/project'
 import CardMerchantsDetail from './components/CardMerchantsDetail.vue'
+import {convertTimestampToDateString} from '@/utils/time'
 export default {
     components: { CardMerchantsDetail },
     data() {
@@ -120,8 +124,7 @@ export default {
     },
     mounted() {
         this.getList(true);
-
-
+        this.convertTimestampToDateString = convertTimestampToDateString;
     },
     methods: {
         editFnc(row, type) {
