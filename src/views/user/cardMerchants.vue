@@ -41,7 +41,7 @@
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="dealers_id" label="id" />
+                <el-table-column prop="dealers_id" label="编号" />
                 <!-- <el-table-column  label="头像" width="100">
                     <template slot-scope="scope">
                        <div style="width: 40px;"><img style="width:100%;" :src="scope.row.head_img" alt=""></div>

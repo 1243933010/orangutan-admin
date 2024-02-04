@@ -40,31 +40,37 @@
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="member_id" label="id" />
+                <el-table-column prop="member_id" label="编号" />
                 <el-table-column  label="头像" width="100">
                     <template slot-scope="scope">
                        <div style="width: 40px;"><img style="width:100%;" :src="scope.row.head_img" alt=""></div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="nickname" label="名称" />
-                <el-table-column prop="mobile" label="mobile" />
+                <el-table-column prop="nickname" label="账号名称" />
+                <el-table-column prop="mobile" label="手机号码" />
                 <el-table-column prop="email" label="邮箱" />
-                <el-table-column prop="card_no" label="身份证" />
+                <el-table-column prop="card_no" label="姓名/身份证">
+                    <template slot-scope="scope">
+                    <div><span>{{ scope.row.name }}</span></div>
+                    <div><span>{{ scope.row.card_no }}</span></div>
+                </template>
+                </el-table-column>
 
                 <el-table-column prop="balance_money" label="账户余额" />
+                <el-table-column prop="forzen_money" label="冻结金额" />
 
                 <el-table-column prop="created_at" label="创建时间">
                     <template slot-scope="scope">
                        <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="updated_at" label="更新时间">
+                <el-table-column prop="updated_at" label="最近登录展示">
                     <template slot-scope="scope">
                        <span>{{ convertTimestampToDateString(scope.row.updated_at) }}</span>
                     </template>
                 </el-table-column>
                 <el-table-column prop="is_auth_text" label="认证状态" />
-                <el-table-column fixed="right" label="操作" width="400">
+                <el-table-column fixed="right" label="操作" width="200">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="editFnc(scope.row)">编辑</el-button>
                         <el-button type="text" size="small" @click="editFnc(scope.row, 'see')">详情</el-button>
