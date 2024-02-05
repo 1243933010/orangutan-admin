@@ -569,3 +569,32 @@ export function deduct_examine(data) {
     data
   })
 }
+
+
+// 收款订单-列表
+export function order_list(params) {
+  return request({
+    url: '/admin/order/list',
+    method: 'get',
+    params
+  })
+}
+
+
+// 收款订单-类型
+export function order_options1(params) {
+  return request({
+    url: '/admin/order/options',
+    method: 'get',
+    params
+  })
+}
+
+
+// 收款订单-类型
+export function order_detail(id) {
+  return request({
+    url: `/admin/order/detail/${id}`,
+    method: 'get',
+  })
+}

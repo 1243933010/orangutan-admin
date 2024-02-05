@@ -12,6 +12,13 @@
                 </div>
                 <div class="form-item"><el-input v-model="formData.keyword" placeholder="请输入...." /></div>
                 <div class="form-item">
+                    <el-select v-model="formData.identity" placeholder="账号类型" style="width: 120px;">
+                        <el-option label="平台" :value="0" />
+                        <el-option label="贸易商" :value="1" />
+                        <el-option label="卡商" :value="2"/>
+                    </el-select>
+                </div>
+                <div class="form-item">
                     <el-select v-model="formData.method" placeholder="状态" style="width: 120px;">
                         <el-option label="充值" value="recharge" />
                         <el-option label="订单冻结" value="order" />
@@ -39,8 +46,8 @@
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="account" label="账号"></el-table-column>
-                <el-table-column prop="log_no" label="订单号"></el-table-column>
+                <el-table-column prop="account" label="资金账号"></el-table-column>
+                <el-table-column prop="log_no" label="资金流水号"></el-table-column>
                 <el-table-column prop="identity" label="渠道">
                     <template slot-scope="scope">
                         <span v-if="scope.row.identity == 0">平台</span>
@@ -55,6 +62,8 @@
                         <span v-if="scope.row.method == 'withdraw'">提现</span>
                     </template>
                 </el-table-column>
+                <el-table-column prop="from_no" label="来源单号"></el-table-column>
+
                 <el-table-column prop="money" label="变动金额"></el-table-column>
                 <el-table-column prop="before_money" label="变动前金额"></el-table-column>
                 <el-table-column prop="remark" label="备注"></el-table-column>
@@ -63,7 +72,7 @@
                        <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="from_no" label="来源单号"></el-table-column>
+                <!-- <el-table-column prop="from_no" label="来源单号"></el-table-column> -->
                 <!-- <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.examine_status == 0" @click="markFnc(scope.row)" type="text"
@@ -106,7 +115,8 @@ export default {
                 time_start: '',
                 time_end: '',
                 time_type: 1,
-                time: ''
+                time: '',
+                identity:''
             },
             formRule: {
                 name: [
@@ -146,7 +156,8 @@ export default {
                 time_start: '',
                 time_end: '',
                 time_type: 1,
-                time: ''
+                time: '',
+                identity:''
             }
         },
         markFnc(row) {

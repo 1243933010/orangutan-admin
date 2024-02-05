@@ -6,6 +6,11 @@
                 <div class="form-item">
                     <el-select v-model="formData.keyword_type" placeholder="手机号" style="width: 120px;">
                         <el-option label="手机号" value="mobile" />
+                        <el-option label="账号名称" value="username" />
+                        <el-option label="商家名称" value="dealers_name" />
+                        <el-option label="邮箱" value="email" />
+                        <el-option label="姓名" value="name" />
+                        <el-option label="身份证" value="card_no" />
                     </el-select>
                 </div>
                 <div class="form-item"><el-input v-model="formData.keyword" type="text" placeholder="请输入..." /></div>
@@ -43,11 +48,21 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="username" label="账号名称" />
-                <el-table-column prop="name" label="商家名称" />
+                <el-table-column prop="dealers_name" label="商家名称" />
                 <el-table-column prop="mobile" label="手机号码" />
                 <el-table-column prop="email" label="邮箱" />
-                <el-table-column prop="card_no" label="姓名/身份证号" />
-                <el-table-column prop="auth_time" label="时间信息" />
+                <el-table-column prop="card_no" label="姓名/身份证">
+                    <template slot-scope="scope">
+                    <div><span>{{ scope.row.name }}</span></div>
+                    <div><span>{{ scope.row.card_no }}</span></div>
+                </template>
+                </el-table-column>
+                <el-table-column prop="created_at" label="时间信息">
+                    <template slot-scope="scope">
+                      <div> <span>注册时间:{{ convertTimestampToDateString(scope.row.created_at) }}</span></div>
+                      <div> <span>最后登录时间:{{ convertTimestampToDateString(scope.row.last_at) }}</span></div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="is_auth" label="认证状态">
                     <template slot-scope="scope">
                         <span v-if="scope.row.is_auth==1">已认证</span>
@@ -83,6 +98,7 @@
 import { authentication_list, admins_del } from '@/api/project'
 import Detail from './components/AuthenticationDetail.vue'
 import  AuthenticationDialog from './components/AuthenticationDialog.vue'
+import {convertTimestampToDateString} from '@/utils/time'
 
 export default {
     components: { Detail,AuthenticationDialog },
@@ -105,6 +121,8 @@ export default {
     mounted() {
         // this.getWithdrawOptions()
         this.getList(true)
+        this.convertTimestampToDateString = convertTimestampToDateString;
+
     },
     methods: {
         openDialog(row){

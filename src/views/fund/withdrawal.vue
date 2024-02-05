@@ -36,16 +36,23 @@
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="mobile" label="提现账号"></el-table-column>
-                <el-table-column prop="username" label="创建人"></el-table-column>
                 <el-table-column prop="withdraw_no" label="提现单号"></el-table-column>
+                <!-- <el-table-column prop="username" label="创建人"></el-table-column> -->
+                <el-table-column prop="status" label="操作人信息">
+                    <template slot-scope="scope">
+                       <div><span>创建人:{{ scope.row.username }}</span></div>
+                       <div><span>审核人:无字段</span></div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="address" label="收款地址"></el-table-column>
                 <el-table-column prop="transfer_hash" label="交易哈希"></el-table-column>
                 <el-table-column prop="money" label="提现金额"></el-table-column>
                 <el-table-column prop="fee" label="固定费用"></el-table-column>
                 <el-table-column prop="rate" label="提现费率"></el-table-column>
-                <el-table-column prop="created_at" label="创建时间">
+                <el-table-column prop="created_at" label="时间信息">
                     <template slot-scope="scope">
-                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
+                      <div> <span>创建时间:{{ convertTimestampToDateString(scope.row.created_at) }}</span></div>
+                      <div> <span>审核时间:{{ convertTimestampToDateString(scope.row.examined_at) }}</span></div>
                     </template>
                 </el-table-column>
                 <el-table-column prop="examine_status_name" label="审核状态">

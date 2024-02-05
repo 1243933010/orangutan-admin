@@ -61,12 +61,14 @@
                        <span>{{ convertTimestampToDateString(scope.row.pay_time) }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column fixed="right" label="操作" width="100">
+                <el-table-column fixed="right" label="操作" width="200">
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.examine_status == 0" @click="markFnc(scope.row)" type="text"
                             size="small">标记失败</el-button>
                         <el-button v-if="scope.row.examine_status !== 1" @click="supplementary(scope.row)" type="text"
                             size="small">补单</el-button>
+                            <!-- <el-button type="text" size="small" @click="editFnc(scope.row)">编辑</el-button> -->
+                        <el-button type="text" size="small" @click="editFnc(scope.row, 'see')">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -78,7 +80,7 @@
             </el-pagination>
         </div>
 
-        <WithdrawalDialog ref="withdrawalRef" @handleExamine="getList(true)" />
+        <RechargeDetail ref="detailRef" @handleExamine="getList(true)" />
     </div>
 </template>
 
@@ -86,10 +88,10 @@
 
 <script>
 import { recharge_list, recharge_checkFail, recharge_reGet } from '@/api/project'
-import WithdrawalDialog from './components/WithdrawalDialog.vue'
+import RechargeDetail from './components/RechargeDetail.vue'
 import {convertTimestampToDateString} from '@/utils/time'
 export default {
-    components: { WithdrawalDialog },
+    components: { RechargeDetail },
     data() {
         return {
             formData: {
@@ -120,6 +122,9 @@ export default {
         this.convertTimestampToDateString = convertTimestampToDateString;
     },
     methods: {
+        editFnc(row, type) {
+            this.$refs.detailRef.openDialog(row, type)
+        },
         resertFormFnc() {
             this.formData = {
                 page: 1,

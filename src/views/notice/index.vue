@@ -28,8 +28,9 @@
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="notice_id" label="id" width="100"></el-table-column>
+                <el-table-column prop="name" label="创建人"  width="100"></el-table-column>
                 <el-table-column prop="title" label="标题"></el-table-column>
-                <el-table-column prop="created_at" label="创建时间">
+                <el-table-column prop="created_at" label="创建时间"  width="120">
                     <template slot-scope="scope">
                         <span>{{ convertTimestampToDateString(scope.row.created_at || '') }}</span>
                     </template>
@@ -37,6 +38,7 @@
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
                         <el-button @click="delFnc(scope.row)" type="text" size="small">删除</el-button>
+                        <el-button type="text" size="small" @click="editFnc(scope.row, 'see')">详情</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -48,7 +50,7 @@
             </el-pagination>
         </div>
 
-        <Detail ref="detailRef" @handleExamine="getList(true)" />
+        <Detail ref="detailRef" @handleEmit="getList(true)" />
     </div>
 </template>
 

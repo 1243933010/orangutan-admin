@@ -44,7 +44,12 @@
                 <el-table-column prop="channel" label="类型" />
                 <el-table-column prop="use_type_text" label="用途" />
                 <el-table-column prop="remark" label="备注" />
-                <el-table-column prop="created_at" label="创建时间" />
+                <el-table-column prop="created_at" label="时间信息">
+                    <template slot-scope="scope">
+                      <div> <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span></div>
+                      <!-- <div> <span>审核时间:{{ convertTimestampToDateString(scope.row.examined_at) }}</span></div> -->
+                    </template>
+                </el-table-column>
                 <el-table-column prop="status" label="状态">
                     <template slot-scope="scope">
                         <span v-if="scope.row.status==1">启用</span>
@@ -71,6 +76,7 @@
 <script>
 import { payment_list, admins_del } from '@/api/project'
 import Detail from './components/WalletDetail.vue'
+import {convertTimestampToDateString} from '@/utils/time'
 
 export default {
     components: { Detail },
@@ -94,6 +100,7 @@ export default {
     mounted() {
         // this.getWithdrawOptions()
         this.getList(true)
+        this.convertTimestampToDateString = convertTimestampToDateString;
     },
     methods: {
         handleRole(row) {

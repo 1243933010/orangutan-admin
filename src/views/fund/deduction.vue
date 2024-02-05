@@ -47,12 +47,18 @@
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="order_no" label="订单号"></el-table-column>
-                <el-table-column prop="transfer_hash" label="交易哈希"></el-table-column>
-                <el-table-column prop="from_account" label="来源账号"></el-table-column>
-                <el-table-column prop="transfer_hash" label="交易哈希"></el-table-column>
-                <el-table-column prop="to_account" label="转入账户"></el-table-column>
+                <el-table-column prop="order_no" label="扣款单号"></el-table-column>
+                <el-table-column prop="transfer_hash" label="交易HASH"></el-table-column>
+                <el-table-column prop="from_account" label="扣款账号"></el-table-column>
                 <el-table-column prop="money" label="订单金额"></el-table-column>
+                <el-table-column prop="to_account" label="扣款账户"></el-table-column>
+               
+                <el-table-column prop="status" label="操作人信息">
+                    <template slot-scope="scope">
+                       <div><span>创建人:{{ scope.row.add_name }}</span></div>
+                       <div><span>审核人:{{ scope.row.examined_name }}</span></div>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="status" label="扣款状态">
                     <template slot-scope="scope">
                         <span v-if="scope.row.status == 1">扣款中</span>
@@ -67,14 +73,17 @@
                         <span v-if="scope.row.status == 3">审核失败</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="created_at" label="创建时间">
+                <el-table-column prop="created_at" label="时间信息">
                     <template slot-scope="scope">
-                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
+                      <div> <span>创建时间:{{ convertTimestampToDateString(scope.row.created_at) }}</span></div>
+                      <div> <span>审核时间:{{ convertTimestampToDateString(scope.row.examined_time) }}</span></div>
                     </template>
                 </el-table-column>
                
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
+                        <el-button @click="editFnc(scope.row,'see')" type="text"
+                            size="small">详情</el-button>
                         <el-button v-if="scope.row.status==1"  @click="openDialog(scope.row)" type="text"
                             size="small">审核</el-button>
                     </template>

@@ -5,36 +5,33 @@
                 <el-row>
                     <el-form ref="ruleForm" :model="formData" class="demo-form-inline" :disabled="method == 'detail'"
                         :rules="rules" label-width="120px">
-                        <el-form-item label="扣款证明图" prop="email">
-                            <el-upload class="upload-com" action="" :file-list="[]"
-                                :http-request="(files) => httpRequest('image', files)"
-                                :before-upload="beforeAvatarUpload" :limit="1">
-                                <!-- <i class="el-icon-plus " style="font-size:82px;" :size="18" /> -->
-                                <div class="pic">
-                                    <img class="img" style="width: 100px;"
-                                        :src="formData.image ? formData.image : defaultImgUrl" alt="">
-                                    <!-- <img class="img" :src="defaultImgUrl" alt=""> -->
-
-
-                                </div>
-                            </el-upload>
+                      
+                        <el-form-item label="充值单号" prop="recharge_no">
+                            <el-input v-model="formData.recharge_no" placeholder="充值单号" />
                         </el-form-item>
-                        <el-form-item label="扣款账号" prop="from_account">
-                            <el-input v-model="formData.from_account" placeholder="扣款账号" />
+                        <el-form-item label="交易哈希" prop="transfer_hash">
+                            <el-input v-model="formData.transfer_hash" placeholder="交易哈希" />
                         </el-form-item>
-                        <el-form-item label="转入账号" prop="to_account">
-                            <el-input v-model="formData.to_account" placeholder="转入账号" />
+                        <el-form-item label="充值金额" prop="money">
+                            <el-input v-model="formData.money" placeholder="充值金额" />
                         </el-form-item>
-                        <el-form-item label="来源单号" prop="from_no">
-                            <el-input v-model="formData.from_no" placeholder="来源单号" />
+                        <el-form-item label="状态" prop="status">
+                            <el-select v-model="formData.status" placeholder="状态">
+                                <el-option label="充值中" :value="0" />
+                                <el-option label="充值成功" :value="1" />
+                                <el-option label="订单取消" :value="2" />
+                                <el-option label="充值失败" :value="3" />
+                            </el-select>
                         </el-form-item>
-                        <el-form-item label="扣款金额" prop="money">
-                            <el-input v-model="formData.money" placeholder="扣款金额" />
+                        <el-form-item label="用户手机号" prop="mobile">
+                            <el-input v-model="formData.mobile" placeholder="用户手机号" />
                         </el-form-item>
-                        <el-form-item label="备注" prop="remark">
-                            <el-input v-model="formData.remark" placeholder="备注" />
+                        <el-form-item label="到账时间" prop="pay_time">
+                            <el-input v-model="formData.pay_time" placeholder="到账时间" />
                         </el-form-item>
-                       
+                        <el-form-item label="创建时间" prop="created_at">
+                            <el-input v-model="formData.created_at" placeholder="创建时间" />
+                        </el-form-item>
 
                     </el-form>
                 </el-row>
@@ -64,32 +61,13 @@ export default {
         }
     },
     methods: {
-        beforeAvatarUpload(file) {
-            const isIMG = file.type.includes('image')
-
-            if (!isIMG) {
-                this.$message.error('上传头像只能是图片!')
-            }
-            return isIMG
-        },
-        async httpRequest(type, files) {
-            const formData = new FormData()
-            formData.append('file', files.file) // 文件名
-            console.log(type, files, formData)
-            const res = await uploadImg(formData)
-            console.log(res, process.env.VUE_APP_FILE_URL)
-            if (res.code == 200) {
-                this.formData[type] = process.env.VUE_APP_FILE_URL + res.data
-                return
-            }
-            this.$message.error(res.msg)
-        },
         openDialog(row, type) {
+            console.log(row)
             if (row) {
                 if (type) {
+                    this.formData = row
                     this.dialogTitle = '详情'
                     this.method = 'detail'
-                    this.formData = row
                     // this.getDetail(row.work_order_id)
                 } else {
                     // this.getDetail(row.work_order_id)

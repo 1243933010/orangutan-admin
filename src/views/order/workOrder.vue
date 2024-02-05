@@ -16,8 +16,8 @@
                     </el-select>
                 </div>
                 <div class="form-item">
-                    <el-select v-model="formData.time_type" placeholder="注册时间" style="width: 120px;">
-                        <el-option label="注册时间" value="created_at" />
+                    <el-select v-model="formData.time_type" placeholder="创建时间" style="width: 120px;">
+                        <el-option label="创建时间" value="created_at" />
                     </el-select>
                 </div>
                 <div class="form-item">
@@ -137,6 +137,7 @@ export default {
                 time: '',
                 order_status: ''
             }
+            this.getList(true)
         },
         handleSizeChange(val) {
             this.formData.limit = val

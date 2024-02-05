@@ -22,8 +22,8 @@
                 </div>
                
                 <div class="form-item">
-                    <el-select v-model="formData.date_type" placeholder="注册时间" style="width: 120px;">
-                        <el-option label="注册时间" :value="1" />
+                    <el-select v-model="formData.date_type" placeholder="创建时间" style="width: 120px;">
+                        <el-option label="创建时间" :value="1" />
                         <el-option label="最近登录时间" :value="2" />
                     </el-select>
                 </div>
@@ -49,6 +49,13 @@
                 </el-table-column> -->
                 <el-table-column prop="username" label="账号名称" />
                 <el-table-column prop="dealers_name" label="商家名称" />
+                <el-table-column prop="card_no" label="姓名/身份证">
+                    <template slot-scope="scope">
+                    <div><span>{{ scope.row.name }}</span></div>
+                    <div><span>{{ scope.row.card_no }}</span></div>
+                </template>
+                </el-table-column>
+
                 <el-table-column prop="mobile" label="手机号码" />
                 <el-table-column prop="email" label="邮箱" />
                 <el-table-column prop="payment_status" label="收款状态">
@@ -58,18 +65,17 @@
                     </template>
                 </el-table-column>
                 <el-table-column prop="rate" label="汇率" />
-                <el-table-column prop="created_at" label="创建时间">
+                <el-table-column prop="sort" label="排序权重" />
+                <el-table-column prop="is_auth_text" label="是否认证" />
+                <el-table-column prop="created_at" label="时间信息">
                     <template slot-scope="scope">
-                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
+                      <div> <span>创建时间:{{ convertTimestampToDateString(scope.row.created_at) }}</span></div>
+                      <div> <span>最近登录时间:{{ convertTimestampToDateString(scope.row.last_at) }}</span></div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="updated_at" label="更新时间">
-                    <template slot-scope="scope">
-                       <span>{{ convertTimestampToDateString(scope.row.updated_at) }}</span>
-                    </template>
-                </el-table-column>
+               
                 
-                <el-table-column fixed="right" label="操作" width="400">
+                <el-table-column fixed="right" label="操作" width="200">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="editFnc(scope.row)">编辑</el-button>
                         <el-button type="text" size="small" @click="editFnc(scope.row, 'see')">详情</el-button>

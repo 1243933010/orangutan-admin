@@ -20,9 +20,9 @@
           </el-form>
         </el-row>
       </div>
-      <span v-if="method !== 'detail'" slot="footer" class="dialog-footer">
+      <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">关闭</el-button>
-        <el-button type="primary" @click="handleEmit">确 定</el-button>
+        <el-button  v-if="method !== 'detail'" type="primary" @click="handleEmit">确 定</el-button>
       </span>
     </el-dialog>
   </div>
