@@ -25,7 +25,7 @@
 
 
 <script>
-import { withdraw_examine } from '@/api/project'
+import { withdraw_examine,withdraw_batchExamine } from '@/api/project'
 export default {
     data() {
         return {
