@@ -54,7 +54,12 @@ export default {
 
         },
         async handleExamine() {
-            let res = await withdraw_examine(this.formData);
+            let res ;
+            if(this.type){
+                await withdraw_batchExamine(this.formData);
+            }else{
+                await withdraw_examine(this.formData);
+            }
             if (res.code == 200) {
                 this.$message.success(res.msg)
                 this.dialogVisible = false;
