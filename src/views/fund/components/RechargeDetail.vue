@@ -46,6 +46,8 @@
   
 <script>
 import { deduct_add,uploadImg } from '@/api/project'
+import {convertTimestampToDateString} from '@/utils/time'
+
 export default {
     data() {
         return {
@@ -63,17 +65,24 @@ export default {
     methods: {
         openDialog(row, type) {
             console.log(row)
+        // this.convertTimestampToDateString = convertTimestampToDateString;
+
             if (row) {
                 if (type) {
+                    row.created_at = convertTimestampToDateString(row.created_at)
                     this.formData = row
                     this.dialogTitle = '详情'
                     this.method = 'detail'
+                   
                     // this.getDetail(row.work_order_id)
                 } else {
                     // this.getDetail(row.work_order_id)
                     this.dialogTitle = '编辑'
                     this.method = 'edit'
+                    row.created_at = convertTimestampToDateString(row.created_at)
+
                     this.formData = row
+                    
                 }
             } else {
                 this.dialogTitle = '添加'
