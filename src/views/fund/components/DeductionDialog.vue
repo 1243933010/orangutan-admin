@@ -25,7 +25,7 @@
 
 
 <script>
-import { deduct_examine } from '@/api/project'
+import { deduct_examine,deduct_batchExamine } from '@/api/project'
 export default {
     data() {
         return {
@@ -34,20 +34,34 @@ export default {
             formData: {
                 deduct_id: '',
                 status: 1,
-                remark: ''
-            }
+                remark: '',
+                ids:''
+            },
+            type:''
         }
     },
     methods: {
-        openDialog(deduct_id) {
+        openDialog(deduct_id,type) {
             this.dialogVisible = true
             this.formData.deduct_id = deduct_id;
+            if(type){
+                this.formData.ids = deduct_id;
+                this.type = type
+            }else{
+                this.type = undefined
+            }
             this.formData.status = 1;
             this.formData.remark = '';
 
         },
         async handleExamine() {
-            let res = await deduct_examine(this.formData);
+            let res ;
+            if(this.type){
+                await deduct_batchExamine(this.formData);
+            }else{
+                await deduct_examine(this.formData);
+            }
+           
             if (res.code == 200) {
                 this.$message.success(res.msg)
                 this.dialogVisible = false;

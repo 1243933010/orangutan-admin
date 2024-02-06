@@ -6,7 +6,7 @@
                 <div class="form-item">
                     <el-select v-model="formData.keyword_type" placeholder="资金流水号" style="width: 120px;">
                         <el-option label="充值单号" value="recharge_no" />
-                        <el-option label="交易哈希" value="transfer_hash" />
+                        <el-option label="充值账号" value="mobile" />
                     </el-select>
                 </div>
                 <div class="form-item"><el-input v-model="formData.keyword" placeholder="请输入...." /></div>
@@ -51,16 +51,13 @@
                         <span v-if="scope.row.status == 3">充值失败</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="created_at" label="创建时间">
+                <el-table-column prop="created_at" label="时间信息">
                     <template slot-scope="scope">
-                       <span>{{ convertTimestampToDateString(scope.row.created_at) }}</span>
+                      <div> <span>创建时间:{{ convertTimestampToDateString(scope.row.created_at) }}</span></div>
+                      <div> <span>充值时间:{{ convertTimestampToDateString(scope.row.pay_time) }}</span></div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="pay_time" label="到账时间">
-                    <template slot-scope="scope">
-                       <span>{{ convertTimestampToDateString(scope.row.pay_time) }}</span>
-                    </template>
-                </el-table-column>
+              
                 <el-table-column fixed="right" label="操作" width="200">
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.examine_status == 0" @click="markFnc(scope.row)" type="text"

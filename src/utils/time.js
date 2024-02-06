@@ -1,4 +1,7 @@
 export const convertTimestampToDateString=(timestamp)=> {
+    if(timestamp==0){
+        return '无'
+    }
     // 将十位数时间戳转换为毫秒级时间戳
     var date = new Date(timestamp * 1000);
 

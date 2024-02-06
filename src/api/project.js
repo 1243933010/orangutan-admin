@@ -570,6 +570,15 @@ export function deduct_examine(data) {
   })
 }
 
+// 扣款订单-批量审核
+export function deduct_batchExamine(data) {
+  return request({
+    url: '/admin/deduct/batchExamine',
+    method: 'post',
+    data
+  })
+}
+
 
 // 收款订单-列表
 export function order_list(params) {

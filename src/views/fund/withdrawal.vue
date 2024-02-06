@@ -29,10 +29,11 @@
                 </div>
                 <div class="form-item submit" @click="getList(true)"><span>搜索</span></div>
                 <div class="form-item reset" @click="resertFormFnc"><span>重置</span></div>
+                <div class="form-item reset" @click="batchExamine"><span>批量审核</span></div>
             </div>
         </div>
         <div class="table">
-            <el-table :data="tableData" style="width: 100%" stripe>
+            <el-table :data="tableData" style="width: 100%" stripe  @selection-change="handleSelectionChange">
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="mobile" label="提现账号"></el-table-column>
@@ -122,6 +123,17 @@ export default {
 
     },
     methods: {
+        batchExamine(){
+            if(!this.selectTableData.length){
+                this.$message.error('请选勾选至少一个');
+                return
+            }
+            let ids = this.selectTableData.map((val)=>val.deduct_id).join(',')
+            this.$refs.withdrawalRef.openDialog(ids,'list')
+        },
+        handleSelectionChange(e){
+            this.selectTableData = e;
+        },
         resertFormFnc() {
             this.formData = {
                 page: 1,

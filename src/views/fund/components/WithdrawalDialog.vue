@@ -35,11 +35,18 @@ export default {
                 withdraw_id: '',
                 result: 1,
                 remark: ''
-            }
+            },
+            type:''
         }
     },
     methods: {
-        openDialog(withdraw_id) {
+        openDialog(withdraw_id,type) {
+            if(type){
+                this.formData.ids = withdraw_id;
+                this.type = type
+            }else{
+                this.type = undefined
+            }
             this.dialogVisible = true
             this.formData.withdraw_id = withdraw_id;
             this.formData.result = 1;

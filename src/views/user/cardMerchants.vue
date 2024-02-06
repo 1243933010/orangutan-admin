@@ -40,8 +40,8 @@
         <div class="table">
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
-                <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="dealers_id" label="编号" />
+                <el-table-column type="selection" width="50"></el-table-column>
+                <el-table-column prop="dealers_id" label="编号" width="50" />
                 <!-- <el-table-column  label="头像" width="100">
                     <template slot-scope="scope">
                        <div style="width: 40px;"><img style="width:100%;" :src="scope.row.head_img" alt=""></div>
@@ -58,15 +58,15 @@
 
                 <el-table-column prop="mobile" label="手机号码" />
                 <el-table-column prop="email" label="邮箱" />
-                <el-table-column prop="payment_status" label="收款状态">
+                <el-table-column prop="payment_status" label="收款状态" width="100">
                     <template slot-scope="scope">
                         <span v-if="scope.row.payment_status==1">开启</span>
                         <span v-if="scope.row.payment_status==0">关闭</span>
                     </template>
                 </el-table-column>
-                <el-table-column prop="rate" label="汇率" />
-                <el-table-column prop="sort" label="排序权重" />
-                <el-table-column prop="is_auth_text" label="是否认证" />
+                <el-table-column prop="rate" label="汇率"  width="100" />
+                <el-table-column prop="sort" label="排序权重" width="100" />
+                <el-table-column prop="is_auth_text" label="是否认证"  width="100" />
                 <el-table-column prop="created_at" label="时间信息">
                     <template slot-scope="scope">
                       <div> <span>创建时间:{{ convertTimestampToDateString(scope.row.created_at) }}</span></div>
