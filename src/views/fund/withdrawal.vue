@@ -4,9 +4,9 @@
             <div class="form">
 
                 <div class="form-item">
-                    <el-select v-model="formData.keyword_type" placeholder="资金流水号" style="width: 120px;">
+                    <el-select v-model="formData.keyword_type" placeholder="提现单号" style="width: 120px;">
                         <el-option label="提现单号" value="withdraw_no" />
-                        <el-option label="交易哈希" value="transfer_hash" />
+                        <el-option label="提现账号" value="mobile" />
                     </el-select>
                 </div>
                 <div class="form-item"><el-input v-model="formData.keyword" placeholder="请输入...." /></div>
