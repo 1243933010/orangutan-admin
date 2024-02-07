@@ -255,6 +255,14 @@ export function withdraw_list(params) {
   })
 }
 
+// 提现订单-详情
+export function withdraw_detail(id) {
+  return request({
+    url: `/admin/withdraw/detail/${id}`,
+    method: 'get'
+  })
+}
+
 // 提现订单-列表的状态可选项
 export function withdraw_options(params) {
   return request({

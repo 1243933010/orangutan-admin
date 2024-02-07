@@ -11,14 +11,15 @@
                 </div>
                 <div class="form-item"><el-input v-model="formData.keyword" placeholder="请输入...." /></div>
                 <div class="form-item">
-                    <el-select v-model="formData.status" placeholder="状态" style="width: 120px;">
+                    <el-select v-model="formData.status" placeholder="审核状态" style="width: 120px;">
                         <el-option label="全部" :value="-1" />
                         <el-option v-for="(item,index) in statusList" :key="index" :label="item.name" :value="item.id" />
                     </el-select>
                 </div>
                 <div class="form-item">
                     <el-select v-model="formData.time_type" placeholder="创建时间" style="width: 120px;">
-                        <el-option label="创建时间" :value="1" />
+                        <el-option label="创建时间" value="created_at" />
+                        <el-option label="审核时间" value="examined_at" />
                     </el-select>
                 </div>
                 <div class="form-item">
@@ -68,6 +69,8 @@
                 </el-table-column>
                 <el-table-column fixed="right" label="操作" width="100">
                     <template slot-scope="scope">
+                        
+                        <el-button @click="editFnc(scope.row,'see')" type="text"  size="small">详情</el-button>
                         <el-button v-if="scope.row.examine_status==1" @click="openDialog(scope.row)" type="text" size="small">审核</el-button>
                     </template>
                 </el-table-column>
@@ -81,6 +84,7 @@
         </div>
 
         <WithdrawalDialog ref="withdrawalRef" @handleExamine="getList(true)" />
+        <WithdrawalDetail ref="detailRef" />
     </div>
 </template>
 
@@ -90,9 +94,10 @@
 import { withdraw_list, withdraw_options } from '@/api/project'
 import  WithdrawalDialog from './components/WithdrawalDialog.vue'
 import {convertTimestampToDateString} from '@/utils/time'
+import  WithdrawalDetail from './components/WithdrawalDetail.vue'
 
 export default {
-    components:{WithdrawalDialog},
+    components:{WithdrawalDialog,WithdrawalDetail},
     data() {
         return {
             formData: {
@@ -101,8 +106,9 @@ export default {
                 total: 0,
                 keyword_type:'withdraw_no',
                 keyword:'',
-                time_type:1,
-                time:''
+                time_type:'created_at',
+                time:'',
+                status:''
             },
             formRule: {
                 name: [
@@ -124,6 +130,9 @@ export default {
 
     },
     methods: {
+        editFnc(row, type) {
+            this.$refs.detailRef.openDialog(row, type)
+        },
         batchExamine(){
             if(!this.selectTableData.length){
                 this.$message.error('请选勾选至少一个');
@@ -142,8 +151,9 @@ export default {
                 total: 0,
                 keyword_type:'withdraw_no',
                 keyword:'',
-                time_type:1,
-                time:''
+                time_type:'created_at',
+                time:'',
+                status:''
             }
         },
         openDialog(row){

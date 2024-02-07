@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="table">
-            <el-table :data="tableData" style="width: 100%" stripe>
+            <el-table :data="tableData" style="width: 100%" stripe  @selection-change="handleSelectionChange">
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
                 <el-table-column prop="account" label="资金账号"></el-table-column>
@@ -125,7 +125,7 @@ export default {
                 ],
             },
             tableData: [],
-
+            selectTableData:[]
         }
     },
     mounted() {
@@ -135,7 +135,15 @@ export default {
 
     },
     methods: {
+        handleSelectionChange(e){
+            this.selectTableData = e;
+        },
         async exportFnc() {
+            if(!this.selectTableData.length){
+                this.$message.error('请选勾选至少一个');
+                return
+            }
+            let ids = this.selectTableData.map((val)=>val.log_id).join(',')
             // let res = await fund_export({});
             // if (res.code == 200) {
             //     this.$message.success(res.msg)
@@ -143,7 +151,13 @@ export default {
             //     return
             // }
             // this.$message.error(res.msg)
-            window.open(`${process.env.VUE_APP_EXPORT_URL}/admin/fund/export`)
+            if (this.formData.time.length > 0) {
+                this.formData.time_start = this.formData.time[0];
+                this.formData.time_end = this.formData.time[1];
+            }
+            let url = `?ids=${ids}&keyword_type=${this.formData.keyword_type}&keyword=${this.formData.keyword}&method=${this.formData.method}&time_start=${this.formData.time_start}&time_end=${this.formData.time_end}&time_type=${this.formData.time_type}&identity=${this.formData.identity}`
+            console.log(url)
+            window.open(`${process.env.VUE_APP_EXPORT_URL}/admin/fund/export${url}`)
         },
         resertFormFnc() {
             this.formData = {
