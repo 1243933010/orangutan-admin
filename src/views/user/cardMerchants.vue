@@ -158,7 +158,7 @@ export default {
         },
         handleCurrentChange(val) {
             this.formData.page = val;
-            this.getList(true)
+            this.getList()
         },
         async getList(bool = false) {
             if (bool) {

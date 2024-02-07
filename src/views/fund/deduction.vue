@@ -194,6 +194,7 @@ export default {
             this.getList(true)
         },
         handleCurrentChange(val) {
+            
             this.formData.page = val;
             this.getList()
         },
