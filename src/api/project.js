@@ -273,6 +273,17 @@ export function withdraw_examine(data) {
   })
 }
 
+// 提现订单-批量审核
+export function withdraw_batchExamine(data) {
+  return request({
+    url: '/admin/withdraw/batchExamine',
+    method: 'post',
+    data
+  })
+}
+
+
+
 // 充值订单-列表
 export function recharge_list(params) {
   return request({

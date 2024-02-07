@@ -114,7 +114,8 @@ export default {
             examined: {},
             status: {},
             examinedList: [],
-            statusList: []
+            statusList: [],
+            selectTableData:[]
         }
     },
     mounted() {
@@ -128,7 +129,7 @@ export default {
                 this.$message.error('请选勾选至少一个');
                 return
             }
-            let ids = this.selectTableData.map((val)=>val.deduct_id).join(',')
+            let ids = this.selectTableData.map((val)=>val.withdraw_id).join(',')
             this.$refs.withdrawalRef.openDialog(ids,'list')
         },
         handleSelectionChange(e){
