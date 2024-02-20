@@ -68,7 +68,12 @@
 
                 <el-table-column fixed="right" label="操作" width="200">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="openDialog(scope.row, 'see')">详情</el-button>
+                        <el-button type="text" size="small" @click="openDialog(scope.row, 'see')">查看</el-button>
+                        <el-button type="text" size="small" @click="openDialog(scope.row, 'see')">查看聊天信息</el-button>
+                        <el-button type="text" size="small" v-if="[4,7].includes(scope.row.order_status)">冻结订单</el-button>
+                        <el-button type="text" size="small"  v-if="[4,7,13].includes(scope.row.order_status)">修改订单状态</el-button>
+                        <el-button type="text" size="small"  v-if="[8,13,14].includes(scope.row.order_status)">冻结账号</el-button>
+
                         <!-- <el-button type="text" size="small" @click="handleBtn(scope.row)">回复</el-button> -->
                     </template>
                 </el-table-column>
