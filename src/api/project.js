@@ -626,3 +626,42 @@ export function order_detail(id) {
     method: 'get',
   })
 }
+
+
+
+// 收款订单-冻结订单
+export function order_freeze(data) {
+  return request({
+    url: '/admin/order/freeze',
+    method: 'post',
+    data
+  })
+}
+
+
+// 收款订单-解冻订单
+export function order_unfreeze(data) {
+  return request({
+    url: '/admin/order/unfreeze',
+    method: 'post',
+    data
+  })
+}
+
+// 收款订单-冻结账号
+export function order_forzen_account(data) {
+  return request({
+    url: '/admin/order/forzen_account',
+    method: 'post',
+    data
+  })
+}
+
+// 收款订单-解冻账号
+export function order_unforzen_account(data) {
+  return request({
+    url: '/admin/order/unforzen_account',
+    method: 'post',
+    data
+  })
+}
