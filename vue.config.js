@@ -38,8 +38,8 @@ module.exports = {
     },
     proxy: {
       '/': {
-        // target: 'http://dev.008.goldkites.com',
-        target: 'http://zyh.008.goldkites.com', 
+        target: 'http://dev.008.goldkites.com',
+        // target: 'http://zyh.008.goldkites.com', 
       },
     },
     // before: require('./mock/mock-server.js')

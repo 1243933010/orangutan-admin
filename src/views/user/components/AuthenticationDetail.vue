@@ -23,6 +23,14 @@
                         <el-form-item label="邮箱" prop="email">
                             <el-input v-model="formData.email" placeholder="邮箱" />
                         </el-form-item>
+                        <el-form-item label="正面照片" prop="email">
+                            <!-- <el-input v-model="card_img.front" placeholder="邮箱" /> -->
+                            <img style="width:200px;" :src="card_img.front?card_img.front:''" alt="">
+                        </el-form-item>
+                        <el-form-item label="反面照片" prop="email">
+                            <!-- <el-input v-model="card_img.front" placeholder="邮箱" /> -->
+                            <img  style="width:200px;"  :src="card_img.back?card_img.back:''" alt="">
+                        </el-form-item>
                         <el-form-item label="认证状态" prop="is_auth">
                             <el-select v-model="formData.is_auth" placeholder="认证状态">
                                 <el-option label="已认证" :value="1" />
@@ -83,6 +91,17 @@ export default {
             list: []
         }
     },
+    computed:{
+        card_img(){
+           
+            if(this.formData.card_img){
+                return JSON.parse(this.formData.card_img)
+            }else{
+                return {back:'',front:''}
+            }
+            
+        }
+    },
     methods: {
         beforeAvatarUpload(file) {
             const isIMG = file.type.includes('image')
@@ -105,10 +124,12 @@ export default {
             this.$message.error(res.msg)
         },
         openDialog(row, type) {
+            console.log(row,type,'222222')
             if (row) {
                 if (type) {
                     this.dialogTitle = '详情'
-                    this.method = 'detail'
+                    this.method = 'detail';
+                    this.formData = row
                     // this.getDetail(row.member_id, row.payment_id)
                 } else {
                     // this.getDetail(row.member_id, row.payment_id)
@@ -126,6 +147,7 @@ export default {
                     description: ''
                 }
             }
+          
             this.dialogVisible = true
         },
         async getDetail(member_id, payment_id) {

@@ -3,25 +3,29 @@
         <div class="search">
             <div class="form">
 
-                <div class="form-item">
+                <!-- <div class="form-item">
                     <el-select v-model="formData.keyword_type" placeholder="手机号" style="width: 120px;">
                         <el-option label="手机号" value="mobile" />
+                        <el-option label="id" value="member_id" />
                         <el-option label="账号名称" value="username" />
                         <el-option label="商家名称" value="dealers_name" />
                         <el-option label="邮箱" value="email" />
                         <el-option label="姓名" value="name" />
                         <el-option label="身份证" value="card_no" />
                     </el-select>
-                </div>
-                <div class="form-item"><el-input v-model="formData.keyword" type="text" placeholder="请输入..." /></div>
-                <div class="form-item">
+                </div> -->
+                <!-- <div class="form-item"><el-input v-model="formData.keyword" type="text" placeholder="请输入手机号" /></div> -->
+                <div class="form-item"><el-input v-model="formData.mobile" type="text" placeholder="请输入手机号" /></div>
+                <div class="form-item"><el-input v-model="formData.member_id" type="text" placeholder="请输入id" /></div>
+
+                <!-- <div class="form-item">
                     <el-select v-model="formData.is_auth" placeholder="认证状态" style="width: 120px;">
                         <el-option label="全部" :value="-1" />
                         <el-option label="已认证" :value="1" />
                         <el-option label="未认证" :value="0" />
                     </el-select>
-                </div>
-                <div class="form-item">
+                </div> -->
+                <!-- <div class="form-item">
                     <el-select v-model="formData.time_type" placeholder="注册时间" style="width: 120px;">
                         <el-option label="注册时间" value="created_at" />
                         <el-option label="最后登录" value="last_at" />
@@ -32,7 +36,7 @@
                         start-placeholder="开始日期" end-placeholder="结束日期">
                     </el-date-picker>
 
-                </div>
+                </div> -->
                 <div class="form-item submit" @click="getList(true)"><span>搜索</span></div>
                 <div class="form-item reset" @click="resertFormFnc"><span>重置</span></div>
             </div>
@@ -41,7 +45,7 @@
             <el-table :data="tableData" style="width: 100%" stripe>
                 <el-table-column prop="" label="" width="10"></el-table-column>
                 <el-table-column type="selection" width="100"></el-table-column>
-                <el-table-column prop="dealers_id" label="id" />
+                <el-table-column prop="member_id" label="id" />
                 <el-table-column  label="头像" width="100">
                     <template slot-scope="scope">
                        <div style="width: 40px;"><img style="width:100%;" :src="scope.row.head_img" alt=""></div>
@@ -63,16 +67,19 @@
                       <div> <span>最后登录时间:{{ convertTimestampToDateString(scope.row.last_at) }}</span></div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="is_auth" label="认证状态">
+                <!-- <el-table-column prop="is_auth" label="认证状态">
                     <template slot-scope="scope">
                         <span v-if="scope.row.is_auth==1">已认证</span>
                         <span v-if="scope.row.is_auth==0">未认证</span>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
                 <el-table-column prop="auth_status" label="审核状态">
                     <template slot-scope="scope">
-                        <span v-if="scope.row.auth_status==1">通过</span>
-                        <span v-if="scope.row.auth_status==2">驳回</span>
+                        <!-- <span v-if="scope.row.auth_status==1">通过</span>
+                        <span v-if="scope.row.auth_status==2">驳回</span> -->
+                        <span v-if="scope.row.auth_status==1">待审核</span>
+                        <span v-if="scope.row.auth_status==2">审核通过</span>
+                        <span v-if="scope.row.auth_status==3">审核拒绝</span>
                     </template>
                 </el-table-column>
                 
@@ -85,7 +92,7 @@
             </el-table>
         </div>
         <div style="display: flex;flex-direction: row-reverse;">
-            <el-pagination :current-page="formData.page" :page-sizes="[10, 20, 30, 40]" :page-size="formData.limit"
+            <el-pagination :current-page="formData.page" :page-sizes="[10, 20, 30, 40]" :page-size="formData.per_page"
                 layout="total, sizes, prev, pager, next, jumper" :total="formData.total" @size-change="handleSizeChange"
                 @current-change="handleCurrentChange" />
         </div>
@@ -106,7 +113,7 @@ export default {
         return {
             formData: {
                 page: 1,
-                limit: 10,
+                per_page: 10,
                 total: 0,
                 keyword_type:'mobile',
                 keyword:'',
@@ -126,7 +133,7 @@ export default {
     },
     methods: {
         openDialog(row){
-            this.$refs.authenticationRef.openDialog(row.dealers_id)
+            this.$refs.authenticationRef.openDialog(row.member_id)
         },
         handleRole(row) {
             this.$refs.adminRolesRef.openDialog(row)
@@ -152,7 +159,7 @@ export default {
         resertFormFnc() {
             this.formData = {
                 page: 1,
-                limit: 10,
+                per_page: 10,
                 total: 0,
                 keyword_type:'mobile',
                 keyword:'',
@@ -162,7 +169,7 @@ export default {
             }
         },
         handleSizeChange(val) {
-            this.formData.limit = val
+            this.formData.per_page = val
             this.getList(true)
         },
         handleCurrentChange(val) {

@@ -32,16 +32,16 @@ export default {
 
             dialogVisible: false,
             formData: {
-                dealers_id: '',
+                member_id: '',
                 status: 1,
                 remark: ''
             }
         }
     },
     methods: {
-        openDialog(dealers_id) {
+        openDialog(member_id) {
             this.dialogVisible = true
-            this.formData.dealers_id = dealers_id;
+            this.formData.member_id = member_id;
             this.formData.result = 1;
             this.formData.remark = '';
 
